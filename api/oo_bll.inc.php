@@ -25,6 +25,74 @@ class BLLSmartphone
     }
 }
 
+class BLLTransaction{
+    private $id;
+    private $userId;
+    private $name;
+    private $date;
+    private $amount;
+    private $type;
+    private $catergoryName;
+    private $currency;
+    private $notes;
+
+    public function setId($id){
+        $this->id = $id;
+    }
+    public function setUserId($userId){
+        $this->userId = $userId;
+    }
+    public function setName($name){
+        $this->name = $name;
+    }
+    public function setDate($date){
+        $this->date = $date;
+    }
+    public function setAmount($amount){
+        $this->amount = $amount;
+    }
+    public function setType($type){
+        $this->type = $type;
+    }
+    public function setCategoryName($catergoryName){
+        $this->catergoryName = $catergoryName;
+    }
+    public function setCurrency($currency){
+        $this->currency = $currency;
+    }
+    public function setNotes($notes){
+        $this->notes = $notes;
+    }
+
+    public function getId(){
+        return $this->id;
+    }
+    public function getUserId(){
+        return $this->userId;
+    }
+    public function getName(){
+        return $this->name;
+    }
+    public function getDate(){
+        return $this->date;
+    }
+    public function getAmount(){
+        return $this->amount;
+    }
+    public function getType(){
+        return $this->type;
+    }
+    public function getCategoryName(){
+        return $this->catergoryName;
+    }
+    public function getCurrency(){
+        return $this->currency;
+    }
+    public function getNotes(){
+        return $this->notes;
+    }
+}
+
 class BLLUser implements jsonSerializable
 {
     private $email;
