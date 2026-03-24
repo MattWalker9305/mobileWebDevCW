@@ -1,0 +1,146 @@
+/* Space out content a bit */
+body {
+	padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header, .details, .footer {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.ni-list {
+	margin-left: 15px;
+}
+
+.art-summary {
+	padding: 10px;
+	font-size: 1.5em;
+}
+
+.art-content {
+	padding: 10px;
+	font-size: 1.25em;
+}
+
+/* Custom page header */
+.header {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.homepage-content {
+	padding: 20px;
+	background-color: #f8f9fa;
+	border-radius: 8px;
+	display: flex;      
+ 	gap: 20px;
+  	margin: 0 auto;
+  	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 100%;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+	margin-top: 0;
+	margin-bottom: 0;
+	line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+	padding-top: 19px;
+	color: #777;
+	border-top: 1px solid #e5e5e5;
+	display: block;
+	width: 100%;
+}
+
+/* Customize container */
+@media ( min-width : 800px) {
+	.container {
+		max-width: 100%;
+	}
+}
+ 
+.hero-banner {
+    background-image: url('../img/home/hero.png');
+    background-size: cover;
+    padding: 80px 40px;
+    text-align: center;
+    color: white;
+	margin: 0 auto;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+
+.hero-banner .lead {
+	background: #363636af;
+	color: #fff;
+}
+
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+.box {
+  background-color: #f4f4f4;
+  padding: 20px;
+  min-width: 250px;
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.box:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
+}
+
+
+/* Supporting content */
+.details {
+	margin: 40px 0;
+}
+
+.details p+h4 {
+	margin-top: 28px;
+}
+
+.form-wrapper {
+	padding: 30px;
+	max-width:70%;
+	margin: 0 auto;
+}
+
+.form-group {
+	margin-bottom: 10px;
+}
+
+
+/* #stad-map {
+	position: relative;
+	padding-bottom: 20%; 
+	overflow: hidden;
+	width: 75%;
+	min-width: 400px;
+	min-height: 400px;
+}
+
+#stad-map iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100% !important;
+	height: 100% !important;
+} */
+
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+	/* Space out the masthead */
+	.header {
+		margin-bottom: 30px;
+	}
+}

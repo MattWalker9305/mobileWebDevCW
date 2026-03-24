@@ -1,0 +1,159 @@
+<?php
+
+//Include our HTML Page Class
+require_once("oo_page.inc.php");
+
+class MasterPage
+{
+    //-------FIELD MEMBERS----------------------------------------
+    private $_htmlpage;     //Holds our Custom Instance of an HTML Page
+    private $_dynamic_1;    //Field Representing our Dynamic Content #1
+    private $_dynamic_2;    //Field Representing our Dynamic Content #2
+    private $_dynamic_3;    //Field Representing our Dynamic Content #3
+    private $_player_ids;
+    
+    //-------CONSTRUCTORS-----------------------------------------
+    function __construct($ptitle)
+    {
+        $this->_htmlpage = new HTMLPage($ptitle);
+        $this->setPageDefaults();
+        $this->setDynamicDefaults(); 
+        $this->_player_ids = [3,7,8,9,10,11,14];
+    }
+    
+    //-------GETTER/SETTER FUNCTIONS------------------------------
+    public function getDynamic1() { return $this->_dynamic_1; }
+    public function getDynamic2() { return $this->_dynamic_2; } 
+    public function getDynamic3() { return $this->_dynamic_3; }
+    public function setDynamic1($phtml) { $this->_dynamic_1 = $phtml; }
+    public function setDynamic2($phtml) { $this->_dynamic_2 = $phtml; } 
+    public function setDynamic3($phtml) { $this->_dynamic_3 = $phtml; }
+    public function getPage(): HTMLPage { return $this->_htmlpage; } 
+    
+    //-------PUBLIC FUNCTIONS-------------------------------------
+                   
+    public function createPage()
+    {
+       //Create our Dynamic Injected Master Page
+       $this->setMasterContent();
+       //Return the HTML Page..
+       return $this->_htmlpage->createPage();
+    }
+    
+    public function renderPage()
+    {
+       //Create our Dynamic Injected Master Page
+       $this->setMasterContent();
+       //Echo the page immediately.
+       $this->_htmlpage->renderPage();
+    }
+    
+    public function addCSSFile($pcssfile)
+    {
+        $this->_htmlpage->addCSSFile($pcssfile);
+    }
+    
+    public function addScriptFile($pjsfile)
+    {
+        $this->_htmlpage->addScriptFile($pjsfile);
+    }
+    
+    //-------PRIVATE FUNCTIONS-----------------------------------    
+    private function setPageDefaults()
+    {
+        $this->_htmlpage->setMediaDirectory("css","js","fonts","img","data");
+        $this->_htmlpage->setCustomHead('
+            <link href="css/bootstrap.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        ');
+        $this->addCSSFile("site.css");       
+    }
+    
+    private function setDynamicDefaults()
+    {
+        $tcurryear = date("Y");
+        
+        $tuser = isset($_SESSION["myname"]) ? $_SESSION["myname"] : null;
+
+        // if($tuser){
+        //     $this->_dynamic_1 = <<<HERO
+        //     <div class="hero-banner">
+        //         <h1 class="user-welcome">Welcome {$tuser}</h1>
+        //     </div>
+        //     HERO;
+            
+        // }
+        // else{
+        //     $this->_dynamic_1 = <<<HERO
+        //     <div class="hero-banner">
+        //         <h1>Phone Ranker</h1>
+        //         <p class="lead">Helping you make the best choice</p>
+        //     </div>
+        //     HERO;
+        // }
+            $this->_dynamic_2 = "";
+            $this->_dynamic_3 = <<<FOOTER
+    <p>Matthew Walker - LJMU &copy; {$tcurryear}</p>
+    FOOTER; 
+        
+    }
+    
+    private function setMasterContent()
+    {
+        $tauth = "";
+        if(isset($_SESSION["myuser"])) 
+        {
+            $tuser = htmlspecialchars($_SESSION["myname"] ?? $_SESSION["myuser"]);
+            $thome = "dashboard.php";
+            $tnav = <<<NAV
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="smartphonelistings.php">Smartphone Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="app_exit.php?action=exit">Exit</a></li>
+                </ul>
+                <span class="navbar-text ms-3">Signed in as <strong>{$tuser}</strong></span>
+            
+    NAV;
+        }
+        else
+        {
+            $thome = "index.php";
+            $tnav = <<<NAV
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                </ul>
+    NAV;
+        }
+
+
+
+        $tmasterpage = <<<MASTER
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{$thome}">FinTrack</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                {$tnav}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="py-4">
+            {$this->_dynamic_1}
+        </div>
+        <div class="row">
+            {$this->_dynamic_2}
+        </div>
+        <footer class="border-top mt-4 py-3 text-muted">
+            {$this->_dynamic_3}
+        </footer>
+    </div>
+    MASTER;
+
+        $this->_htmlpage->setBodyContent($tmasterpage);
+    }
+}
+?>
