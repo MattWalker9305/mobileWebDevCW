@@ -98,12 +98,42 @@ function jsonLoadOneSmartphone($pid) : BLLSmartphone
     return $smartphone;
 }
 
+function jsonLoadOneTransaction($pid) : BLLTransaction
+{
+    $transaction = new BLLTransaction();
+    $transaction->fromArray(jsonOne("data/json/transactions.json",$pid));
+    return $transaction;
+}
+
+function jsonLoadOneTransactionForUser($pid,$puser) : BLLTransaction
+{
+    $transaction = jsonLoadOneTransaction($pid);
+    if($transaction->user === $puser)
+        return $transaction;
+    else
+        return null;
+}
 //--------------MANY OBJECT IMPLEMENTATION--------------------------------------------------------
 function jsonLoadAllSmartphone() : array
 {
     $tarray = jsonAll("data/json/smartphones.json");
     return array_map(function($a){ $tc = new BLLSmartphone(); $tc->fromArray($a); return $tc; },$tarray);
 }
+
+function jsonLoadAllTransactions() : array
+{
+    $tarray = jsonAll("data/json/transactions.json");
+    return array_map(function($a){ $tc = new BLLTransaction(); $tc->fromArray($a); return $tc; },$tarray);
+}
+
+function jsonLoadAllTransactionsForUser($puser) : array
+{
+    $transactions = jsonLoadAllTransactions();
+    return array_filter($transactions, function($t) use ($puser) {
+        return $t->user === $puser;
+    });
+}
+
 //---------XML HELPER FUNCTIONS--------------------------------------------------------
 
 function xmlLoadAll($pxmlfile,$pclassname,$parrayname)

@@ -79,15 +79,22 @@ $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";
 
-//----BUILD OUR HTML PAGE----------------------------
-//Create an instance of our Page class
-$tpage = new MasterPage($tpagetitle);
-//Set the Three Dynamic Areas (1 and 3 have defaults)
-if(!empty($tpagelead))
-    $tpage->setDynamic1($tpagelead);
-$tpage->setDynamic2($tpagecontent);
-if(!empty($tpagefooter))
-    $tpage->setDynamic3($tpagefooter);
-//Return the Dynamic Page to the user.    
-$tpage->renderPage();
+if (!isset($_SESSION['myuser']))
+{
+    header("Location: login.php");
+    die();
+}
+else{
+    //----BUILD OUR HTML PAGE----------------------------
+    //Create an instance of our Page class
+    $tpage = new MasterPage($tpagetitle);
+    //Set the Three Dynamic Areas (1 and 3 have defaults)
+    if(!empty($tpagelead))
+        $tpage->setDynamic1($tpagelead);
+    $tpage->setDynamic2($tpagecontent);
+    if(!empty($tpagefooter))
+        $tpage->setDynamic3($tpagefooter);
+    //Return the Dynamic Page to the user.    
+    $tpage->renderPage();
+    }
 ?>
