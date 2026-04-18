@@ -12,5 +12,12 @@
         "lname": "Bob",
         "username": "bobob",
         "password": "qwerty"
+    },
+    {
+        "email": "1@1.com",
+        "fname": "1",
+        "lname": "1",
+        "username": "1",
+        "password": "1"
     }
 ]

@@ -7,9 +7,6 @@ include("api/api.inc.php");
 function createPage()
 {
     //Get the Data we need for this page
-    $smartphones   = jsonLoadAllSmartphone();
-    $smartphoneshtml     = renderSmartphoneTable($smartphones);
-
     // $spendingOverview = jsonLoadSpendingOverview($_SESSION["myuser"] ?? "");
     // $spendingOverviewHtml = renderSpendingOverview($spendingOverview);
     
@@ -21,10 +18,8 @@ $tcontent = <<<PAGE
             <h3 class="panel-title">Overview</h3>
         </div>
         <div class="panel-spending">
-
         </div>
         <div class="panel-body">
-        {$smartphoneshtml}
         </div>
     </div>
 </section>

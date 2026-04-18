@@ -61,9 +61,13 @@ class MasterPage
     //-------PRIVATE FUNCTIONS-----------------------------------    
     private function setPageDefaults()
     {
-        $this->_htmlpage->setMediaDirectory("css","js","fonts","img","data");
+        $this->_htmlpage->setMediaDirectory("/mobileWebDevCW/css",
+                                            "/mobileWebDevCW/js",
+                                            "/mobileWebDevCW/fonts",
+                                            "/mobileWebDevCW/img",
+                                            "/mobileWebDevCW/data");
         $this->_htmlpage->setCustomHead('
-            <link href="css/bootstrap.css" rel="stylesheet">
+            <link href="/mobileWebDevCW/css/bootstrap.css" rel="stylesheet">
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         ');
         $this->addCSSFile("site.css");       

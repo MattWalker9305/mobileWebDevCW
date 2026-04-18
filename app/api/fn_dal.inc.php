@@ -1,6 +1,7 @@
 <?php
 //Include the Other Layers Class Definitions
 require_once("oo_bll.inc.php");
+define('BASE_PATH', dirname(__DIR__, 2));
 
 //---------JSON HELPER FUNCTIONS-------------------------------------------------------
 
@@ -34,7 +35,7 @@ function jsonNextID($pfile)
 
 function jsonNextPlayerID()
 {
-    return jsonNextID("data/json/players.json");
+    return jsonNextID("/mobileWebDevCW/data/json/players.json");
 }
 
 //---------USER FUNCTIONS-------------------------------------------------------
@@ -52,12 +53,12 @@ function jsonSaveUser($user)
     ];
 
     $users[] = $user_data;
-    file_put_contents("data/json/users.json", json_encode($users, JSON_PRETTY_PRINT));
+    file_put_contents(BASE_PATH . "/data/json/users.json", json_encode($users, JSON_PRETTY_PRINT));
 }
 
 function jsonLoadAllUsers()
 {
-    $file_path = 'data/json/users.json';
+    $file_path = BASE_PATH . '/data/json/users.json';    
     if (!file_exists($file_path)) {
         $dir = dirname($file_path);
         if (!is_dir($dir)) {
@@ -86,14 +87,25 @@ function jsonLoadAllUsers()
     return $users;
 }
 
+function jsonLoadOneUser($username)
+{
+    $users = jsonLoadAllUsers();
+    foreach ($users as $user) {
+        if ($user->getUsername() === $username) {
+            return $user;
+        }
+    }
+    return null; // User not found
+}
+
 //---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
 function jsonLoadOneSmartphone($pid) : BLLSmartphone
 {
     $smartphone = new BLLSmartphone();
-    $smartphone->fromArray(jsonOne("data/json/smartphones.json",$pid));
+    $smartphone->fromArray(jsonOne("/mobileWebDevCW/data/json/smartphones.json",$pid));
     if(!empty($smartphone->desc_href))
     {
-        $smartphone->desc = file_get_contents("data/html/smartphone/{$smartphone->desc_href}");
+        $smartphone->desc = file_get_contents("/mobileWebDevCW/data/html/smartphone/{$smartphone->desc_href}");
     }
     return $smartphone;
 }
@@ -101,7 +113,7 @@ function jsonLoadOneSmartphone($pid) : BLLSmartphone
 function jsonLoadOneTransaction($pid) : BLLTransaction
 {
     $transaction = new BLLTransaction();
-    $transaction->fromArray(jsonOne("data/json/transactions.json",$pid));
+    $transaction->fromArray(jsonOne("/mobileWebDevCW/data/json/transactions.json",$pid));
     return $transaction;
 }
 
@@ -116,13 +128,13 @@ function jsonLoadOneTransactionForUser($pid,$puser) : BLLTransaction
 //--------------MANY OBJECT IMPLEMENTATION--------------------------------------------------------
 function jsonLoadAllSmartphone() : array
 {
-    $tarray = jsonAll("data/json/smartphones.json");
+    $tarray = jsonAll("/mobileWebDevCW/data/json/smartphones.json");
     return array_map(function($a){ $tc = new BLLSmartphone(); $tc->fromArray($a); return $tc; },$tarray);
 }
 
 function jsonLoadAllTransactions() : array
 {
-    $tarray = jsonAll("data/json/transactions.json");
+    $tarray = jsonAll("/mobileWebDevCW/data/json/transactions.json");
     return array_map(function($a){ $tc = new BLLTransaction(); $tc->fromArray($a); return $tc; },$tarray);
 }
 

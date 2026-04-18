@@ -6,7 +6,7 @@ include("api/api.inc.php");
 function createPage()
 {
     //Page-Specific Static Content
-    $twelcome = file_get_contents("data\static\index_welcome.part.html");
+    $twelcome = file_get_contents(__DIR__ . "/../data/static/index_welcome.part.html");
 
 $tcontent = <<<PAGE
             <div class="hero-banner">
