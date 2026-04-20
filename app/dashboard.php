@@ -36,7 +36,7 @@ $tcontent = <<<PAGE
         </div>
         <div class="panel-body">
             <h3 class="panel-subtitle">Recent Transactions</h3>
-            <a class="btn btn-primary" href= "login.php">+ New Transaction </a>
+            <a class="btn btn-primary" href= "new_transaction.php">+ New Transaction </a>
         </div>
     </div>
 </section>

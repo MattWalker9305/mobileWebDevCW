@@ -154,6 +154,77 @@ FORM;
     return $html;
 }
 
+// ----------TRANSACTION RENDERING----------------------------------------------
+
+function renderTransactionForm()
+{
+    $html = <<<FORM
+    <div class="form-wrapper">
+        <form method="post" action="register.php" class="form-horizontal" accept-charset="utf-8">
+        <div class="form-group">
+                <label class="col-sm-2 control-label">Type:</label>
+                <div class="col-sm-10">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="mytype" value="income" required> Income
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="mytype" value="expense"> Expense
+                        </label>
+                    </div>
+                </div>
+            </div>
+        <div class="form-group">
+                <label for="myname" class="col-sm-2 control-label">Transaction Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="myname" name="myname" placeholder="Enter transaction name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mydate" class="col-sm-2 control-label">Date:</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="mydate" name="mydate" placeholder="Enter date" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="myamount" class="col-sm-2 control-label">Amount:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="myamount" name="myamount" placeholder="Enter amount" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mycategory" class="col-sm-2 control-label">Category:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="mycategory" name="mycategory" placeholder="Enter category" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mycurrency" class="col-sm-2 control-label">Currency:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="mycurrency" name="mycurrency" required>
+                        <option value="">Select Currency</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mynotes" class="col-sm-2 control-label">Notes:</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="mynotes" name="mynotes" placeholder="Enter notes" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+FORM;
+    return $html;
+}
 // ----------BOX RENDERING----------------------------------------------
 function renderBox($title, $content)
 {

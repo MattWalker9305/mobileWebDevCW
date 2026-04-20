@@ -127,6 +127,25 @@ function jsonLoadOneTransactionForUser($pid,$puser) : BLLTransaction
     else
         return null;
 }
+function jsonSaveTransaction($transaction)
+{
+    $transactions = jsonLoadAllTransactions();
+
+    $transaction_data = [
+        'id'       => $transaction->getId(),
+        'userId'   => $transaction->getUserId(),
+        'name'     => $transaction->getName(),
+        'date'     => $transaction->getDate(),
+        'amount'   => $transaction->getAmount(),
+        'type'     => $transaction->getType(),
+        'categoryName' => $transaction->getCategoryName(),
+        'currency' => $transaction->getCurrency(),
+        'notes'    => $transaction->getNotes()
+    ];
+
+    $transactions[] = $transaction_data;
+    file_put_contents(BASE_PATH . "/data/json/transactions.json", json_encode($transactions, JSON_PRETTY_PRINT));
+}
 //--------------MANY OBJECT IMPLEMENTATION--------------------------------------------------------
 function jsonLoadAllSmartphone() : array
 {
