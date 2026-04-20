@@ -79,26 +79,17 @@ class MasterPage
         
         $tuser = isset($_SESSION["myname"]) ? $_SESSION["myname"] : null;
 
-        // if($tuser){
-        //     $this->_dynamic_1 = <<<HERO
-        //     <div class="hero-banner">
-        //         <h1 class="user-welcome">Welcome {$tuser}</h1>
-        //     </div>
-        //     HERO;
-            
-        // }
-        // else{
-        //     $this->_dynamic_1 = <<<HERO
-        //     <div class="hero-banner">
-        //         <h1>Phone Ranker</h1>
-        //         <p class="lead">Helping you make the best choice</p>
-        //     </div>
-        //     HERO;
-        // }
+            $this->_dynamic_1 = "";
             $this->_dynamic_2 = "";
             $this->_dynamic_3 = <<<FOOTER
-    <p>Matthew Walker - LJMU &copy; {$tcurryear}</p>
-    FOOTER; 
+    <div class="fl-footer-terms">
+        <span>&copy; {$tcurryear} Matthew Walker &mdash; LJMU</span>
+        <ul>
+            <li><a href="privacy.php">Privacy Policy</a></li>
+            <li><a href="terms.php">Terms of Service</a></li>
+        </ul>
+    </div>
+    FOOTER;
         
     }
     
@@ -112,6 +103,9 @@ class MasterPage
             $tnav = <<<NAV
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.php">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.php">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.php">Reports</a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="app_exit.php?action=exit">Logout</a></li>
                 </ul>
