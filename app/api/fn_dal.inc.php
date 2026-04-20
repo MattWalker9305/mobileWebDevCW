@@ -127,24 +127,81 @@ function jsonLoadOneTransactionForUser($pid,$puser) : BLLTransaction
     else
         return null;
 }
-function jsonSaveTransaction($transaction)
+
+function jsonLoadAllTransactions()
+{
+    $file_path = BASE_PATH . '/data/json/transactions.json';    
+    if (!file_exists($file_path)) {
+        $dir = dirname($file_path);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        file_put_contents($file_path, json_encode([]));
+    }
+    $json_data = file_get_contents($file_path);
+    if ($json_data === false) {
+        return [];
+    }
+    $transactions_data = json_decode($json_data, true); // true = associative arrays
+    if (json_last_error() !== JSON_ERROR_NONE || !is_array($transactions_data)) {
+        return [];
+    }
+    $transactions = [];
+    foreach ($transactions_data as $transaction_data) {
+        $transaction = new BLLTransaction();
+        $transaction->setId($transaction_data['id'] ?? null);
+        $transaction->setUserId($transaction_data['userId'] ?? null);
+        $transaction->setName($transaction_data['name'] ?? null);
+        $transaction->setDate($transaction_data['date'] ?? null);
+        $transaction->setAmount($transaction_data['amount'] ?? null);
+        $transaction->setType($transaction_data['type'] ?? null);
+        $transaction->setCategoryName($transaction_data['categoryName'] ?? null);
+        $transaction->setCurrency($transaction_data['currency'] ?? null);
+        $transaction->setNotes($transaction_data['notes'] ?? null);
+        $transactions[] = $transaction;
+    }
+    return $transactions;
+}
+
+function jsonLoadAllTransactionsForUser($puser) : array
 {
     $transactions = jsonLoadAllTransactions();
+    return array_filter($transactions, function($t) use ($puser) {
+        return $t->getUserId() === $puser;
+    });
+}
 
-    $transaction_data = [
-        'id'       => $transaction->getId(),
-        'userId'   => $transaction->getUserId(),
-        'name'     => $transaction->getName(),
-        'date'     => $transaction->getDate(),
-        'amount'   => $transaction->getAmount(),
-        'type'     => $transaction->getType(),
+function getNextTransactionId()
+{
+    $transactions = jsonLoadAllTransactions();
+    if (empty($transactions)) return 1;
+    $max = 0;
+    foreach ($transactions as $t) {
+        if ($t->getId() > $max) $max = $t->getId();
+    }
+    return $max + 1;
+}
+
+function jsonSaveTransaction($transaction)
+{
+    $file_path = BASE_PATH . "/data/json/transactions.json";
+    $json_data = file_exists($file_path) ? file_get_contents($file_path) : '[]';
+    $transactions = json_decode($json_data, true);
+    if (!is_array($transactions)) $transactions = [];
+
+    $transactions[] = [
+        'id'           => $transaction->getId(),
+        'userId'       => $transaction->getUserId(),
+        'name'         => $transaction->getName(),
+        'date'         => $transaction->getDate(),
+        'amount'       => $transaction->getAmount(),
+        'type'         => $transaction->getType(),
         'categoryName' => $transaction->getCategoryName(),
-        'currency' => $transaction->getCurrency(),
-        'notes'    => $transaction->getNotes()
+        'currency'     => $transaction->getCurrency(),
+        'notes'        => $transaction->getNotes()
     ];
 
-    $transactions[] = $transaction_data;
-    file_put_contents(BASE_PATH . "/data/json/transactions.json", json_encode($transactions, JSON_PRETTY_PRINT));
+    file_put_contents($file_path, json_encode($transactions, JSON_PRETTY_PRINT));
 }
 //--------------MANY OBJECT IMPLEMENTATION--------------------------------------------------------
 function jsonLoadAllSmartphone() : array
@@ -153,19 +210,19 @@ function jsonLoadAllSmartphone() : array
     return array_map(function($a){ $tc = new BLLSmartphone(); $tc->fromArray($a); return $tc; },$tarray);
 }
 
-function jsonLoadAllTransactions() : array
-{
-    $tarray = jsonAll(BASE_PATH . "/data/json/transactions.json");
-    return array_map(function($a){ $tc = new BLLTransaction(); $tc->fromArray($a); return $tc; },$tarray);
-}
+// function jsonLoadAllTransactions() : array
+// {
+//     $tarray = jsonAll(BASE_PATH . "/data/json/transactions.json");
+//     return array_map(function($a){ $tc = new BLLTransaction(); $tc->fromArray($a); return $tc; },$tarray);
+// }
 
-function jsonLoadAllTransactionsForUser($puser) : array
-{
-    $transactions = jsonLoadAllTransactions();
-    return array_filter($transactions, function($t) use ($puser) {
-        return $t->user === $puser;
-    });
-}
+// function jsonLoadAllTransactionsForUser($puser) : array
+// {
+//     $transactions = jsonLoadAllTransactions();
+//     return array_filter($transactions, function($t) use ($puser) {
+//         return $t->user === $puser;
+//     });
+// }
 
 function jsonLoadAllBoxInfo($location) : array
 {

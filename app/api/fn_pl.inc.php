@@ -160,7 +160,7 @@ function renderTransactionForm()
 {
     $html = <<<FORM
     <div class="form-wrapper">
-        <form method="post" action="register.php" class="form-horizontal" accept-charset="utf-8">
+        <form method="post" action="new_transaction.php" class="form-horizontal" accept-charset="utf-8">
         <div class="form-group">
                 <label class="col-sm-2 control-label">Type:</label>
                 <div class="col-sm-10">
@@ -217,7 +217,7 @@ function renderTransactionForm()
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">Create Transaction</button>
                 </div>
             </div>
         </form>

@@ -1,0 +1,24 @@
+[
+    {
+        "id": 3,
+        "userId": 6,
+        "name": "Uber money",
+        "date": "2025-09-13",
+        "amount": "20",
+        "type": "income",
+        "categoryName": "Travel",
+        "currency": "EUR",
+        "notes": "uber money"
+    },
+    {
+        "id": 4,
+        "userId": 1,
+        "name": "money to shaun",
+        "date": "2026-04-15",
+        "amount": "70",
+        "type": "expense",
+        "categoryName": "Friends",
+        "currency": "GBP",
+        "notes": "Money for the concert"
+    }
+]

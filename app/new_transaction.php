@@ -25,8 +25,9 @@ function createPage()
             if (empty($error)) {
                 // Create new user
                 $new_transaction = new BLLTransaction();
-                $new_transaction->setId(getNextTransactionId($transactions));
-                $new_transaction->setUserId($_SESSION['myid']);
+                $new_transaction->setId(getNextTransactionId());
+                $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
+                $new_transaction->setUserId($loggedInUser->getId());
                 $new_transaction->setName($name);
                 $new_transaction->setDate($date);
                 $new_transaction->setAmount($amount);
