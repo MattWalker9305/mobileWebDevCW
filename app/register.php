@@ -35,6 +35,7 @@ function createPage()
             if (empty($error)) {
                 // Create new user
                 $new_user = new BLLUser();
+                $new_user->setId(getNextUserId($users));
                 $new_user->setEmail($email);
                 $new_user->setFname($fname);
                 $new_user->setLname($lname);

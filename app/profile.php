@@ -36,18 +36,19 @@ PAGE;
 //Start up a PHP Session for this user.
 session_start();
 
-//Build up our Dynamic Content Items. 
+if (empty($_SESSION['myuser']))
+{
+    header("Location: login.php");
+    die();
+}
+
+//Build up our Dynamic Content Items.
 $tpagetitle = "Profile Page";
 $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";
 
-if (!isset($_SESSION['myuser']))
 {
-    header("Location: login.php");
-    die();
-}
-else{
     //----BUILD OUR HTML PAGE----------------------------
     //Create an instance of our Page class
     $tpage = new MasterPage($tpagetitle);

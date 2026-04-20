@@ -219,5 +219,17 @@ function appSessionDestroy()
     session_unset();
     session_destroy();
 }
-    
+  
+function getNextUserId($users) {
+    $maxId = 0;
+
+    foreach ($users as $user) {
+        if ($user->getId() !== null && $user->getId() > $maxId) {
+            $maxId = $user->getId();
+        }
+    }
+
+    return $maxId + 1;
+}
+
 ?>

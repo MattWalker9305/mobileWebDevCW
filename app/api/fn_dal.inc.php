@@ -45,9 +45,10 @@ function jsonSaveUser($user)
     $users = jsonLoadAllUsers();
 
     $user_data = [
-        'email' => $user->getEmail(),
-        'fname' => $user->getFname(),
-        'lname' => $user->getLname(),
+        'id'       => $user->getId(),
+        'email'    => $user->getEmail(),
+        'fname'    => $user->getFname(),
+        'lname'    => $user->getLname(),
         'username' => $user->getUsername(),
         'password' => $user->getPassword()
     ];
@@ -77,6 +78,7 @@ function jsonLoadAllUsers()
     $users = [];
     foreach ($users_data as $user_data) {
         $user = new BLLUser();
+        $user->setId($user_data['id'] ?? null);
         $user->setEmail($user_data['email']);
         $user->setFname($user_data['fname']);
         $user->setLname($user_data['lname']);
@@ -87,15 +89,15 @@ function jsonLoadAllUsers()
     return $users;
 }
 
-function jsonLoadOneUser($username)
+function jsonLoadOneUser($email)
 {
     $users = jsonLoadAllUsers();
     foreach ($users as $user) {
-        if ($user->getUsername() === $username) {
+        if ($user->getEmail() === $email) {
             return $user;
         }
     }
-    return null; // User not found
+    return null;
 }
 
 //---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
@@ -113,7 +115,7 @@ function jsonLoadOneSmartphone($pid) : BLLSmartphone
 function jsonLoadOneTransaction($pid) : BLLTransaction
 {
     $transaction = new BLLTransaction();
-    $transaction->fromArray(jsonOne("/mobileWebDevCW/data/json/transactions.json",$pid));
+    $transaction->fromArray(jsonOne(BASE_PATH . "/data/json/transactions.json",$pid));
     return $transaction;
 }
 
@@ -134,7 +136,7 @@ function jsonLoadAllSmartphone() : array
 
 function jsonLoadAllTransactions() : array
 {
-    $tarray = jsonAll("/mobileWebDevCW/data/json/transactions.json");
+    $tarray = jsonAll(BASE_PATH . "/data/json/transactions.json");
     return array_map(function($a){ $tc = new BLLTransaction(); $tc->fromArray($a); return $tc; },$tarray);
 }
 
@@ -144,6 +146,12 @@ function jsonLoadAllTransactionsForUser($puser) : array
     return array_filter($transactions, function($t) use ($puser) {
         return $t->user === $puser;
     });
+}
+
+function jsonLoadAllBoxInfo($location) : array
+{
+    $tjson = file_get_contents($location);
+    return json_decode($tjson, true);
 }
 
 //---------XML HELPER FUNCTIONS--------------------------------------------------------

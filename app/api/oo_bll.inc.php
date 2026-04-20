@@ -95,12 +95,16 @@ class BLLTransaction{
 
 class BLLUser implements jsonSerializable
 {
+    private $id;
     private $email;
     private $fname;
     private $lname;
     private $username;
     private $password;
 
+    public function setId($id){
+        $this->id = $id;
+    }
     public function setEmail($email){
         $this->email = $email;
     }
@@ -117,6 +121,9 @@ class BLLUser implements jsonSerializable
         $this->password = $password;
     }
 
+    public function getId(){
+        return $this->id;
+    }
     public function getEmail(){
         return $this->email;
     }
@@ -135,6 +142,7 @@ class BLLUser implements jsonSerializable
 
     public function jsonSerialize(): mixed {
         return [
+            'id'       => $this->id,
             'email'    => $this->email,
             'fname'    => $this->fname,
             'lname'    => $this->lname,

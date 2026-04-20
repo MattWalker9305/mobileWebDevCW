@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "email": "matthewwalker194@gmail.com",
         "fname": "Matthew",
         "lname": "Walker",
@@ -7,6 +8,7 @@
         "password": "1qaz2WSX"
     },
     {
+        "id": 2,
         "email": "bob@bob.com",
         "fname": "Bob",
         "lname": "Bob",
@@ -14,10 +16,35 @@
         "password": "qwerty"
     },
     {
+        "id": 3,
         "email": "1@1.com",
         "fname": "1",
         "lname": "1",
         "username": "1",
         "password": "1"
+    },
+    {
+        "id": 4,
+        "email": "asdasd@mail.com",
+        "fname": "a",
+        "lname": "a",
+        "username": "asdasfasd",
+        "password": "54NF#x!6~MTTuvu"
+    },
+    {
+        "id": 5,
+        "email": "test1@mail.com",
+        "fname": "1",
+        "lname": "1",
+        "username": "1",
+        "password": "1"
+    },
+    {
+        "id": 6,
+        "email": "test2@email.com",
+        "fname": "2",
+        "lname": "2",
+        "username": "2",
+        "password": "2"
     }
 ]
