@@ -29,12 +29,14 @@ $tcontent = <<<PAGE
 <section class = "row details" id = "club-quote">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">Overview</h3>
+            <h3 class="panel-title">Dashboard</h3>
         </div>
         <div class="dashboard-content">
             {$tboxes}
         </div>
         <div class="panel-body">
+            <h3 class="panel-subtitle">Recent Transactions</h3>
+            <a class="btn btn-primary" href= "login.php">+ New Transaction </a>
         </div>
     </div>
 </section>
