@@ -29,7 +29,8 @@ body {
 	border-bottom: 1px solid #e5e5e5;
 }
 
-.homepage-content {
+.homepage-content, 
+.dashboard-content {
 	padding: 20px;
 	border-radius: 8px;
 	display: flex;      

@@ -9,7 +9,21 @@ function createPage()
     //Get the Data we need for this page
     // $spendingOverview = jsonLoadSpendingOverview($_SESSION["myuser"] ?? "");
     // $spendingOverviewHtml = renderSpendingOverview($spendingOverview);
-    
+    $totalIncome = 500;//getTotalIncome($_SESSION["myuser"] ?? "");
+    $totalExpenses = 200;//getTotalExpenses($_SESSION["myuser"] ?? "");
+    $netProfit = $totalIncome - $totalExpenses;
+
+    $tbox_info = [
+        ["title" => "Total Income", "description" => $totalIncome],
+        ["title" => "Total Expenses", "description" => $totalExpenses],
+        ["title" => "Net Profit", "description" => $netProfit]    
+    ];
+
+    $tboxes = "";
+    foreach ($tbox_info as $box) {
+        $tboxes .= renderBox($box['title'], $box['description']);
+    }
+
     //Construct the Page
 $tcontent = <<<PAGE
 <section class = "row details" id = "club-quote">
@@ -17,7 +31,8 @@ $tcontent = <<<PAGE
         <div class="panel-heading">
             <h3 class="panel-title">Overview</h3>
         </div>
-        <div class="panel-spending">
+        <div class="dashboard-content">
+            {$tboxes}
         </div>
         <div class="panel-body">
         </div>

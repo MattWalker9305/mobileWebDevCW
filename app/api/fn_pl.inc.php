@@ -153,4 +153,16 @@ function renderRegisterForm()
 FORM;
     return $html;
 }
+
+// ----------BOX RENDERING----------------------------------------------
+function renderBox($title, $content)
+{
+    $tbox = <<<BOX
+    <div class="box">
+        <h2>{$title}</h2>
+        <p>{$content}</p>
+    </div>
+BOX;
+    return $tbox;
+}
 ?>

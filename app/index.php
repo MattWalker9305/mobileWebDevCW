@@ -6,16 +6,22 @@ include("api/api.inc.php");
 function createPage()
 {
     //Page-Specific Static Content
-    $twelcome = file_get_contents(__DIR__ . "/../data/static/index_welcome.part.html");
+    $twelcome = file_get_contents(BASE_PATH . "/data/static/index_welcome.part.html");
+
+    $tbox_info = jsonLoadAllBoxInfo(BASE_PATH . "/data/json/home_page.json");
+    $tboxes = "";
+    foreach ($tbox_info as $box) {
+        $tboxes .= renderBox($box['title'], $box['description']);
+    }
 
 $tcontent = <<<PAGE
             <div class="hero-banner">
                 <h1>Track Your Finances</h1>
                 <p class="lead">Helping you make informed financial decisions</p>
-                <a class="btn btn-primary" href="login.php">Get Started</a>
+                <a class="btn btn-primary" href= "login.php">Get Started</a>
             </div>
             <div class="homepage-content">
-                {$twelcome}
+                {$tboxes}
             </div>
         
 PAGE;
