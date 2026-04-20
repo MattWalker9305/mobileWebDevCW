@@ -226,12 +226,12 @@ FORM;
     return $html;
 }
 // ----------BOX RENDERING----------------------------------------------
-function renderBox($title, $content)
+function renderBox($title, $content, $date = "", $amount = "", $type = "", $categoryName = "", $currency = "", $notes = "")
 {
     $tbox = <<<BOX
     <div class="box">
         <h2>{$title}</h2>
-        <p>{$content}</p>
+        <p>{$content} {$date} {$amount} {$type} {$categoryName} {$currency} {$notes}</p>
     </div>
 BOX;
     return $tbox;

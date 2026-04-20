@@ -20,5 +20,16 @@
         "categoryName": "Friends",
         "currency": "GBP",
         "notes": "Money for the concert"
+    },
+    {
+        "id": 5,
+        "userId": 1,
+        "name": "Job money",
+        "date": "2026-04-01",
+        "amount": "1000",
+        "type": "income",
+        "categoryName": "Job",
+        "currency": "GBP",
+        "notes": "Money from work\r\n"
     }
 ]

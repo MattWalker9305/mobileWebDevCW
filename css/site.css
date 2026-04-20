@@ -41,6 +41,13 @@ body {
 	max-width: 100%;
 }
 
+.transaction-content {
+	padding: 20px;
+	border-radius: 8px;
+ 	gap: 20px;
+  	justify-content: left;
+	max-width: 100%;
+}
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
 	margin-top: 0;
@@ -120,12 +127,20 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: 0.5s;
+  margin: 10px;
 }
 .box:hover {
   transform: scale(1.05);
   transition: 0.5s;
 }
 
+.transaction-content {
+	/* display: flex; */
+	flex-wrap: wrap; 
+	gap: 20px;
+	padding: 20px;
+	justify-content: left;
+}
 
 /* Supporting content */
 .details {
