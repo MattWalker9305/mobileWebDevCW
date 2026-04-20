@@ -119,6 +119,7 @@ body {
   width: 30%;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: 0.5s;
 }
 .box:hover {
   transform: scale(1.05);
@@ -144,26 +145,6 @@ body {
 .form-group {
 	margin-bottom: 10px;
 }
-
-
-/* #stad-map {
-	position: relative;
-	padding-bottom: 20%; 
-	overflow: hidden;
-	width: 75%;
-	min-width: 400px;
-	min-height: 400px;
-}
-
-#stad-map iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100% !important;
-	height: 100% !important;
-} */
-
-
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

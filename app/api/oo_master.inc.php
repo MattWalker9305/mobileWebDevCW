@@ -96,29 +96,40 @@ class MasterPage
     private function setMasterContent()
     {
         $tauth = "";
-        if(isset($_SESSION["myuser"])) 
+        if(isset($_SESSION["myuser"]))
         {
             $tuser = htmlspecialchars($_SESSION["myname"] ?? $_SESSION["myuser"]);
             $thome = "dashboard.php";
+            $tcurrent = basename($_SERVER['PHP_SELF']);
+            $active_dashboard = $tcurrent === "dashboard.php" ? " active" : "";
+            $active_transactions = $tcurrent === "transactions.php" ? " active" : "";
+            $active_categories = $tcurrent === "categories.php" ? " active" : "";
+            $active_reports   = $tcurrent === "reports.php"   ? " active" : "";
+            $active_profile   = $tcurrent === "profile.php"   ? " active" : "";
+
             $tnav = <<<NAV
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php">Transactions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php">Categories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php">Reports</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_dashboard}" href="dashboard.php">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_transactions}" href="transactions.php">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_categories}" href="categories.php">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_reports}" href="reports.php">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_profile}" href="profile.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="app_exit.php?action=exit">Logout</a></li>
                 </ul>
                 <span class="navbar-text ms-3">Signed in as <strong>{$tuser}</strong></span>
-            
+
     NAV;
         }
         else
         {
             $thome = "index.php";
+
+            $tcurrent = basename($_SERVER['PHP_SELF']);
+            $active_login   = $tcurrent === "login.php"   ? " active" : "";
+
             $tnav = <<<NAV
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_login}" href="login.php">Login</a></li>
                 </ul>
     NAV;
         }
