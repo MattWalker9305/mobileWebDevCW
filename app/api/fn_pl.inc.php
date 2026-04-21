@@ -239,7 +239,7 @@ function renderTransactionForm($defaultCurrency, $userId)
             <div class="form-group">
                 <label for="mynotes" class="col-sm-2 control-label">Notes:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="mynotes" name="mynotes" placeholder="Enter notes" required></textarea>
+                    <textarea class="form-control" id="mynotes" name="mynotes" placeholder="Enter notes"></textarea>
                 </div>
             </div>
             <div class="form-group">
