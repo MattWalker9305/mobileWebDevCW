@@ -3,29 +3,17 @@
 include("api/api.inc.php");
 
 //----PAGE GENERATION LOGIC---------------------------
-
 function createPage()
 {
-    //Get the Data we need for this page
-    $smartphones   = jsonLoadAllSmartphone();
-   
-    $smartphoneshtml     = renderSmartphoneTable($smartphones);
-    
-    //Construct the Page
+    //Page-Specific Static Content
+    $privacy_policy = file_get_contents(BASE_PATH . "/data/static/privacy_policy.html");
+
 $tcontent = <<<PAGE
-<section class = "row details" id = "club-quote">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Smartphones</h3>
-        </div>
-        <div class="panel-body">
-        {$smartphoneshtml}
-        </div>
-    </div>
-</section>
-
+            <div class="privacy-content">
+                {$privacy_policy}
+            </div>
+        
 PAGE;
-
 return $tcontent;
 }
 
@@ -34,10 +22,11 @@ return $tcontent;
 session_start();
 
 //Build up our Dynamic Content Items. 
-$tpagetitle = "Smartphone Listings";
+$tpagetitle = "Home Page";
 $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";
+
 
 //----BUILD OUR HTML PAGE----------------------------
 //Create an instance of our Page class

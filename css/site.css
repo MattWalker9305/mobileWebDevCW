@@ -29,18 +29,63 @@ body {
 	border-bottom: 1px solid #e5e5e5;
 }
 
-.homepage-content {
+.homepage-content,
+.dashboard-content {
 	padding: 20px;
-	background-color: #f8f9fa;
 	border-radius: 8px;
-	display: flex;      
+	display: flex;
  	gap: 20px;
   	margin: 0 auto;
-  	justify-content: center;
+  	justify-content: flex-start;
 	flex-wrap: wrap;
 	max-width: 100%;
 }
 
+.category-content {
+	padding: 20px;
+	border-radius: 8px;
+	max-width: 100%;
+}
+
+.add-category-form .form-wrapper {
+	margin: 0;
+	padding: 0;
+	max-width: 480px;
+}
+
+.transaction-content {
+	padding: 20px;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+ 	gap: 20px;
+  	justify-content: flex-start;
+	flex-wrap: nowrap;
+	max-width: 100%;
+}
+
+.transaction-content .box {
+	flex: 1 1 0;
+	min-width: 250px;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.transaction-content .box:hover {
+	transform: scale(1.02);
+}
+
+.transaction-actions {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 10px;
+}
+
+.category-content .box {
+	width: 100%;
+	box-sizing: border-box;
+}
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
 	margin-top: 0;
@@ -56,6 +101,34 @@ body {
 	display: block;
 	width: 100%;
 }
+
+.fl-footer-terms {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.875rem;
+}
+
+.fl-footer-terms ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 16px;
+}
+
+.fl-footer-terms a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.fl-footer-terms a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
 
 /* Customize container */
 @media ( min-width : 800px) {
@@ -84,19 +157,29 @@ body {
 	border-color: #007bff;
 }
 
+
 .box {
-  background-color: #f4f4f4;
-  padding: 20px;
-  min-width: 250px;
-  width: 30%;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.5s;
+    flex: 1 1 250px;   
+    max-width: 100%;
 }
+
 .box:hover {
   transform: scale(1.05);
   transition: 0.5s;
 }
 
+.transaction-content {
+	/* display: flex; */
+	flex-wrap: wrap; 
+	gap: 20px;
+	padding: 20px;
+	justify-content: left;
+}
 
 /* Supporting content */
 .details {
@@ -116,26 +199,6 @@ body {
 .form-group {
 	margin-bottom: 10px;
 }
-
-
-/* #stad-map {
-	position: relative;
-	padding-bottom: 20%; 
-	overflow: hidden;
-	width: 75%;
-	min-width: 400px;
-	min-height: 400px;
-}
-
-#stad-map iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100% !important;
-	height: 100% !important;
-} */
-
-
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

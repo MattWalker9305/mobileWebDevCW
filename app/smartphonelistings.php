@@ -7,21 +7,16 @@ include("api/api.inc.php");
 function createPage()
 {
     //Get the Data we need for this page
-    $smartphones   = jsonLoadAllSmartphone();
-    $smartphoneshtml     = renderSmartphoneTable($smartphones);
-
-    // $spendingOverview = jsonLoadSpendingOverview($_SESSION["myuser"] ?? "");
-    // $spendingOverviewHtml = renderSpendingOverview($spendingOverview);
+    $smartphones = jsonLoadAllSmartphone();
+   
+    $smartphoneshtml = renderSmartphoneTable($smartphones);
     
     //Construct the Page
 $tcontent = <<<PAGE
 <section class = "row details" id = "club-quote">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">Overview</h3>
-        </div>
-        <div class="panel-spending">
-
+            <h3 class="panel-title">Smartphones</h3>
         </div>
         <div class="panel-body">
         {$smartphoneshtml}
@@ -39,7 +34,7 @@ return $tcontent;
 session_start();
 
 //Build up our Dynamic Content Items. 
-$tpagetitle = "Dashboard";
+$tpagetitle = "Smartphone Listings";
 $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";

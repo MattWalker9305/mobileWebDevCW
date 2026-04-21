@@ -1,0 +1,14 @@
+[   
+    {
+        "title" : "Welcome to FinTrack",
+        "description" : "Track your finances and make informed decisions."
+    },
+    {
+        "title" : "Get Started",
+        "description" : "Login to your account or sign up to start tracking your finances today."
+    },
+    {
+        "title" : "Features",
+        "description" : "<ul><li>Track your expenses and income</li><li>Set financial goals and budgets</li><li>Generate reports and insights</li></ul>"
+    }
+]

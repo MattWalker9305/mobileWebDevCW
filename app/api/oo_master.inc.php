@@ -61,10 +61,15 @@ class MasterPage
     //-------PRIVATE FUNCTIONS-----------------------------------    
     private function setPageDefaults()
     {
-        $this->_htmlpage->setMediaDirectory("css","js","fonts","img","data");
+        $this->_htmlpage->setMediaDirectory("/mobileWebDevCW/css",
+                                            "/mobileWebDevCW/js",
+                                            "/mobileWebDevCW/fonts",
+                                            "/mobileWebDevCW/img",
+                                            "/mobileWebDevCW/data");
         $this->_htmlpage->setCustomHead('
-            <link href="css/bootstrap.css" rel="stylesheet">
+            <link href="/mobileWebDevCW/css/bootstrap.css" rel="stylesheet">
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js "></script>
         ');
         $this->addCSSFile("site.css");       
     }
@@ -75,52 +80,57 @@ class MasterPage
         
         $tuser = isset($_SESSION["myname"]) ? $_SESSION["myname"] : null;
 
-        // if($tuser){
-        //     $this->_dynamic_1 = <<<HERO
-        //     <div class="hero-banner">
-        //         <h1 class="user-welcome">Welcome {$tuser}</h1>
-        //     </div>
-        //     HERO;
-            
-        // }
-        // else{
-        //     $this->_dynamic_1 = <<<HERO
-        //     <div class="hero-banner">
-        //         <h1>Phone Ranker</h1>
-        //         <p class="lead">Helping you make the best choice</p>
-        //     </div>
-        //     HERO;
-        // }
+            $this->_dynamic_1 = "";
             $this->_dynamic_2 = "";
             $this->_dynamic_3 = <<<FOOTER
-    <p>Matthew Walker - LJMU &copy; {$tcurryear}</p>
-    FOOTER; 
+    <div class="fl-footer-terms">
+        <span>&copy; {$tcurryear} Matthew Walker &mdash; LJMU</span>
+        <ul>
+            <li><a href="privacy.php">Privacy Policy</a></li>
+            <li><a href="terms.php">Terms of Service</a></li>
+        </ul>
+    </div>
+    FOOTER;
         
     }
     
     private function setMasterContent()
     {
         $tauth = "";
-        if(isset($_SESSION["myuser"])) 
+        if(isset($_SESSION["myuser"]))
         {
             $tuser = htmlspecialchars($_SESSION["myname"] ?? $_SESSION["myuser"]);
             $thome = "dashboard.php";
+            $tcurrent = basename($_SERVER['PHP_SELF']);
+            $active_dashboard = $tcurrent === "dashboard.php" ? " active" : "";
+            $active_transactions = $tcurrent === "transactions.php" ? " active" : "";
+            $active_categories = $tcurrent === "categories.php" ? " active" : "";
+            $active_reports   = $tcurrent === "reports.php"   ? " active" : "";
+            $active_profile   = $tcurrent === "profile.php"   ? " active" : "";
+
             $tnav = <<<NAV
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="smartphonelistings.php">Smartphone Listings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="app_exit.php?action=exit">Exit</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_dashboard}" href="dashboard.php">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_transactions}" href="transactions.php">Transactions</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_categories}" href="categories.php">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_reports}" href="reports.php">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_profile}" href="profile.php">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="app_exit.php?action=exit">Logout</a></li>
                 </ul>
                 <span class="navbar-text ms-3">Signed in as <strong>{$tuser}</strong></span>
-            
+
     NAV;
         }
         else
         {
             $thome = "index.php";
+
+            $tcurrent = basename($_SERVER['PHP_SELF']);
+            $active_login   = $tcurrent === "login.php"   ? " active" : "";
+
             $tnav = <<<NAV
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                    <li class="nav-item"><a class="nav-link{$active_login}" href="login.php">Login</a></li>
                 </ul>
     NAV;
         }

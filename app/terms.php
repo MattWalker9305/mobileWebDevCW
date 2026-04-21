@@ -6,16 +6,11 @@ include("api/api.inc.php");
 function createPage()
 {
     //Page-Specific Static Content
-    $twelcome = file_get_contents("data\static\index_welcome.part.html");
+    $terms_of_service = file_get_contents(BASE_PATH . "/data/static/terms_of_service.html");
 
 $tcontent = <<<PAGE
-            <div class="hero-banner">
-                <h1>Track Your Finances</h1>
-                <p class="lead">Helping you make informed financial decisions</p>
-                <a class="btn btn-primary" href="login.php">Get Started</a>
-            </div>
-            <div class="homepage-content">
-                {$twelcome}
+            <div class="terms-content">
+                {$terms_of_service}
             </div>
         
 PAGE;
@@ -31,6 +26,7 @@ $tpagetitle = "Home Page";
 $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";
+
 
 //----BUILD OUR HTML PAGE----------------------------
 //Create an instance of our Page class
