@@ -46,7 +46,7 @@ function createPage()
         }
     }
 
-    $transactionForm = renderTransactionForm($loggedInUser->getDefaultCurrency());
+    $transactionForm = renderTransactionForm($loggedInUser->getDefaultCurrency(), $loggedInUser->getId());
 
     //Construct the Page
 $tcontent = <<<PAGE

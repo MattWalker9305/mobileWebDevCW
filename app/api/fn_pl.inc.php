@@ -167,12 +167,20 @@ FORM;
 
 // ----------TRANSACTION RENDERING----------------------------------------------
 
-function renderTransactionForm($defaultCurrency)
+function renderTransactionForm($defaultCurrency, $userId)
 {
 
     $usdSelected = ($defaultCurrency == 'USD' ? 'selected' : '');
     $eurSelected = ($defaultCurrency == 'EUR' ? 'selected' : '');
     $gbpSelected = ($defaultCurrency == 'GBP' ? 'selected' : '');
+
+    $categoryOptions = "";
+    $categories = jsonLoadAllCategoriesForUser($userId);
+
+    foreach ($categories as $category) {
+        $categoryName = $category->getName();
+        $categoryOptions .= "<option value='{$categoryName}'>{$categoryName}</option>";
+    }
 
     $html = <<<FORM
     <div class="form-wrapper">
@@ -211,7 +219,10 @@ function renderTransactionForm($defaultCurrency)
             <div class="form-group">
                 <label for="mycategory" class="col-sm-2 control-label">Category:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="mycategory" name="mycategory" placeholder="Enter category" required>
+                    <select class="form-control" id="mycategory" name="mycategory" required>
+                        <option value="">Select Category</option>
+                        $categoryOptions
+                    </select>
                 </div>
             </div>
             <div class="form-group">
