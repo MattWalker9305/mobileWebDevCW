@@ -132,6 +132,17 @@ function renderRegisterForm()
                 </div>
             </div>
             <div class="form-group">
+                <label for="mycurrency" class="col-sm-2 control-label">Currency:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="mycurrency" name="mycurrency" required>
+                        <option value="">Select Currency</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="mypassword" class="col-sm-2 control-label">Password:</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" id="mypassword" name="mypassword" placeholder="Enter password" required>
@@ -156,8 +167,13 @@ FORM;
 
 // ----------TRANSACTION RENDERING----------------------------------------------
 
-function renderTransactionForm()
+function renderTransactionForm($defaultCurrency)
 {
+
+    $usdSelected = ($defaultCurrency == 'USD' ? 'selected' : '');
+    $eurSelected = ($defaultCurrency == 'EUR' ? 'selected' : '');
+    $gbpSelected = ($defaultCurrency == 'GBP' ? 'selected' : '');
+
     $html = <<<FORM
     <div class="form-wrapper">
         <form method="post" action="new_transaction.php" class="form-horizontal" accept-charset="utf-8">
@@ -203,9 +219,9 @@ function renderTransactionForm()
                 <div class="col-sm-10">
                     <select class="form-control" id="mycurrency" name="mycurrency" required>
                         <option value="">Select Currency</option>
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
+                        <option value="USD" $usdSelected>USD</option>
+                        <option value="EUR" $eurSelected>EUR</option>
+                        <option value="GBP" $gbpSelected>GBP</option>
                     </select>
                 </div>
             </div>
@@ -225,8 +241,29 @@ function renderTransactionForm()
 FORM;
     return $html;
 }
+
+function renderAddCategoryForm()
+{
+    $html = <<<FORM
+    <div class="form-wrapper">
+        <form method="post" action="categories.php" accept-charset="utf-8">
+            <div class="form-group">
+                <label for="mycategory">Category:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="mycategory" name="mycategory" placeholder="Enter category" required>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary ms-2">+</button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+FORM;
+    return $html;
+}
+
 // ----------BOX RENDERING----------------------------------------------
-function renderBox($title, $content, $date = "", $amount = "", $type = "", $categoryName = "", $currency = "", $notes = "")
+function renderBox($title, $content = "", $date = "", $amount = "", $type = "", $categoryName = "", $currency = "", $notes = "")
 {
     $tbox = <<<BOX
     <div class="box">

@@ -6,6 +6,10 @@ include("api/api.inc.php");
 
 function createPage()
 {
+
+    $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
+    $userID = $loggedInUser->getId();
+
     //Get the Data we need for this page
     // $spendingOverview = jsonLoadSpendingOverview($_SESSION["myuser"] ?? "");
     // $spendingOverviewHtml = renderSpendingOverview($spendingOverview);
@@ -24,9 +28,16 @@ function createPage()
         $tboxes .= renderBox($box['title'], $box['description']);
     }
 
+    $userTransactions = jsonLoadAllTransactionsForUser($userID ?? "");
+
+    $recentTransactionBoxes = "";
+    foreach ($userTransactions as $box) {
+        $recentTransactionBoxes .= renderBox($box->getName(), $box->getDate(), $box->getAmount(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes());
+    }
+
     //Construct the Page
 $tcontent = <<<PAGE
-<section class = "row details" id = "club-quote">
+<section class = "row details">
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Dashboard</h3>
@@ -36,7 +47,12 @@ $tcontent = <<<PAGE
         </div>
         <div class="panel-body">
             <h3 class="panel-subtitle">Recent Transactions</h3>
-            <a class="btn btn-primary" href= "new_transaction.php">+ New Transaction </a>
+            <div class="transaction-actions">
+                <a class="btn btn-primary" href= "new_transaction.php">+ New Transaction </a>
+            </div>
+            <div class="transaction-content">
+                {$recentTransactionBoxes}
+            </div>
         </div>
     </div>
 </section>
@@ -51,10 +67,7 @@ return $tcontent;
 session_start();
 
 //Build up our Dynamic Content Items. 
-$tpagetitle = "Dashboard";
-$tpagelead  = "";
-$tpagecontent = createPage();
-$tpagefooter = "";
+
 
 if (!isset($_SESSION['myuser']))
 {
@@ -62,6 +75,12 @@ if (!isset($_SESSION['myuser']))
     die();
 }
 else{
+
+    $tpagetitle = "Dashboard";
+    $tpagelead  = "";
+    $tpagecontent = createPage();
+    $tpagefooter = "";
+
     //----BUILD OUR HTML PAGE----------------------------
     //Create an instance of our Page class
     $tpage = new MasterPage($tpagetitle);

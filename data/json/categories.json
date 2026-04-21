@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "userId": 1,
+        "name": "Friends"
+    },
+    {
+        "id": 2,
+        "userId": 1,
+        "name": "Food"
+    },
+    {
+        "id": 3,
+        "userId": 1,
+        "name": "Transport"
+    },
+    {
+        "id": 4,
+        "userId": 1,
+        "name": "Entertainment"
+    },
+    {
+        "id": 5,
+        "userId": 1,
+        "name": "Bills"
+    },
+    {
+        "id": 6,
+        "userId": 1,
+        "name": "Job"
+    },
+    {
+        "id": 7,
+        "userId": 1,
+        "name": "Other"
+    },
+    {
+        "id": 8,
+        "userId": 6,
+        "name": "Friends"
+    }
+]   

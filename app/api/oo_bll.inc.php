@@ -25,6 +25,32 @@ class BLLSmartphone
     }
 }
 
+class BLLCategory{
+    private $id;
+    private $userId;
+    private $name;
+
+    public function setId($id){
+        $this->id = $id;
+    }
+    public function setUserId($userId){
+        $this->userId = $userId;
+    }
+    public function setName($name){
+        $this->name = $name;
+    }
+
+    public function getId(){
+        return $this->id;
+    }
+    public function getUserId(){
+        return $this->userId;
+    }
+    public function getName(){
+        return $this->name;
+    }
+}
+
 class BLLTransaction{
     private $id;
     private $userId;
@@ -101,6 +127,7 @@ class BLLUser implements jsonSerializable
     private $lname;
     private $username;
     private $password;
+    private $defaultCurrency;
 
     public function setId($id){
         $this->id = $id;
@@ -119,6 +146,9 @@ class BLLUser implements jsonSerializable
     }
     public function setPassword($password){
         $this->password = $password;
+    }
+    public function setDefaultCurrency($defaultCurrency){
+        $this->defaultCurrency = $defaultCurrency;
     }
 
     public function getId(){
@@ -139,6 +169,9 @@ class BLLUser implements jsonSerializable
     public function getPassword(){
         return $this->password;
     }
+    public function getDefaultCurrency(){
+        return $this->defaultCurrency;
+    }
 
     public function jsonSerialize(): mixed {
         return [
@@ -148,6 +181,7 @@ class BLLUser implements jsonSerializable
             'lname'    => $this->lname,
             'username' => $this->username,
             'password' => $this->password,
+            'defaultCurrency' => $this->defaultCurrency
         ];
     }
 }

@@ -21,11 +21,7 @@ $tcontent = <<<PAGE
 <section class = "row details">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title">Transactions</h3>
-            <a class="btn btn-primary" href= "new_transaction.php">+ New Transaction </a>
-        </div>
-        <div class="transaction-content">
-            {$tboxes}
+            <h3 class="panel-title">Reports</h3>
         </div>
     </div>    
 </section>
@@ -49,7 +45,7 @@ if (!isset($_SESSION['myuser']))
 }
 else{
 
-    $tpagetitle = "Transactions";
+    $tpagetitle = "Reports";
     $tpagelead  = "";
     $tpagecontent = createPage();
     $tpagefooter = "";

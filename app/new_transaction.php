@@ -7,6 +7,8 @@ include("api/api.inc.php");
 function createPage()
 {
 
+    $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
+
     $error = "";
     $success = "";
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -23,7 +25,7 @@ function createPage()
             $error = "<p class='text-danger'>All fields are required.</p>";
         } else {
             if (empty($error)) {
-                // Create new user
+                // Create new transaction
                 $new_transaction = new BLLTransaction();
                 $new_transaction->setId(getNextTransactionId());
                 $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
@@ -44,7 +46,7 @@ function createPage()
         }
     }
 
-    $transactionForm = renderTransactionForm();
+    $transactionForm = renderTransactionForm($loggedInUser->getDefaultCurrency());
 
     //Construct the Page
 $tcontent = <<<PAGE
@@ -69,7 +71,7 @@ return $tcontent;
 session_start();
 
 //Build up our Dynamic Content Items. 
-$tpagetitle = "Dashboard";
+$tpagetitle = "New Transaction";
 $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";
