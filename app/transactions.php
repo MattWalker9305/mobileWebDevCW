@@ -10,10 +10,11 @@ function createPage()
     $userID = $loggedInUser->getId();
 
     $userTransactions = jsonLoadAllTransactionsForUser($userID ?? "");
+    $userTransactions = sortTransactionsByDate($userTransactions);
 
     $tboxes = "";
     foreach ($userTransactions as $box) {
-        $tboxes .= renderBox($box->getName(), $box->getDate(), $box->getAmount(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes());
+        $tboxes .= renderBox($box->getName(), $box->getDate(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes(), $box->getAmount());
     }
 
     //Construct the Page

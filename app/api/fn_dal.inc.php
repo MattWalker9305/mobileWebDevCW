@@ -207,6 +207,15 @@ function jsonSaveTransaction($transaction)
     file_put_contents($file_path, json_encode($transactions, JSON_PRETTY_PRINT));
 }
 
+function sortTransactionsByDate($transactions) {
+    usort($transactions, function($a, $b) {
+        $dateA = strtotime($a->getDate());
+        $dateB = strtotime($b->getDate());
+        return $dateB <=> $dateA; // Sort in descending order
+    });
+    return $transactions;
+}
+
 function getNextCategoryId()
 {
     $categories = jsonLoadAllCategories();

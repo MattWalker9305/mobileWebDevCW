@@ -30,9 +30,12 @@ function createPage()
 
     $userTransactions = jsonLoadAllTransactionsForUser($userID ?? "");
 
+    $userTransactions = sortTransactionsByDate($userTransactions);
+    $userTransactions = array_slice($userTransactions, 0, 5);
+    
     $recentTransactionBoxes = "";
     foreach ($userTransactions as $box) {
-        $recentTransactionBoxes .= renderBox($box->getName(), $box->getDate(), $box->getAmount(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes());
+        $recentTransactionBoxes .= renderBox($box->getName(), $box->getDate(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes(),$box->getAmount());
     }
 
     //Construct the Page
