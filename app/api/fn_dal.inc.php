@@ -103,6 +103,37 @@ function jsonLoadOneUser($email)
     return null;
 }
 
+function updateUser($updatedUser)
+{
+    $users = jsonLoadAllUsers();
+    $updated = [];
+
+    foreach ($users as $user) {
+        if ($user->getEmail() === $updatedUser->getEmail()) {
+            $updated[] = [
+                'id'       => $updatedUser->getId(),
+                'email'    => $updatedUser->getEmail(),
+                'fname'    => $updatedUser->getFname(),
+                'lname'    => $updatedUser->getLname(),
+                'username' => $updatedUser->getUsername(),
+                'password' => $updatedUser->getPassword(),
+                'defaultCurrency' => $updatedUser->getDefaultCurrency()
+            ];
+        } else {
+            $updated[] = [
+                'id'       => $user->getId(),
+                'email'    => $user->getEmail(),
+                'fname'    => $user->getFname(),
+                'lname'    => $user->getLname(),
+                'username' => $user->getUsername(),
+                'password' => $user->getPassword(),
+                'defaultCurrency' => $user->getDefaultCurrency()
+            ];
+        }
+    }
+    file_put_contents(BASE_PATH . "/data/json/users.json", json_encode($updated, JSON_PRETTY_PRINT));
+}
+
 //---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
 function jsonLoadOneSmartphone($pid) : BLLSmartphone
 {
