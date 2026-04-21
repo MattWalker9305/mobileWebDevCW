@@ -103,7 +103,7 @@ function jsonLoadOneUser($email)
     return null;
 }
 
-function updateUser($updatedUser)
+function jsonUpdateUser($updatedUser)
 {
     $users = jsonLoadAllUsers();
     $updated = [];
