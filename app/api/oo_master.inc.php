@@ -69,6 +69,7 @@ class MasterPage
         $this->_htmlpage->setCustomHead('
             <link href="/mobileWebDevCW/css/bootstrap.css" rel="stylesheet">
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js "></script>
         ');
         $this->addCSSFile("site.css");       
     }
