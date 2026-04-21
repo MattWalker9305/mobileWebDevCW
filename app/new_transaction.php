@@ -71,10 +71,7 @@ return $tcontent;
 session_start();
 
 //Build up our Dynamic Content Items. 
-$tpagetitle = "New Transaction";
-$tpagelead  = "";
-$tpagecontent = createPage();
-$tpagefooter = "";
+
 
 if (!isset($_SESSION['myuser']))
 {
@@ -82,6 +79,12 @@ if (!isset($_SESSION['myuser']))
     die();
 }
 else{
+
+    $tpagetitle = "New Transaction";
+    $tpagelead  = "";
+    $tpagecontent = createPage();
+    $tpagefooter = "";
+    
     //----BUILD OUR HTML PAGE----------------------------
     //Create an instance of our Page class
     $tpage = new MasterPage($tpagetitle);

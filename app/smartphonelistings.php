@@ -7,9 +7,9 @@ include("api/api.inc.php");
 function createPage()
 {
     //Get the Data we need for this page
-    $smartphones   = jsonLoadAllSmartphone();
+    $smartphones = jsonLoadAllSmartphone();
    
-    $smartphoneshtml     = renderSmartphoneTable($smartphones);
+    $smartphoneshtml = renderSmartphoneTable($smartphones);
     
     //Construct the Page
 $tcontent = <<<PAGE
