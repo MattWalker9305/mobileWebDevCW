@@ -11,6 +11,10 @@ function createPage()
     
     $userInfo = jsonLoadOneUser($_SESSION['myuser']);
 
+    $updateForm = renderUpdateForm($userInfo);
+
+
+
     $tcontent = <<<PAGE
     <section class="row details" id="Profile">
         <div class="panel panel-info">
@@ -18,12 +22,9 @@ function createPage()
                 <h3 class="panel-title">Profile</h3>
             </div>
             <div class="panel-body">
-                {$userInfo->getFname()} <br>
-                {$userInfo->getLname()} <br>
-                {$userInfo->getEmail()} <br>
-                {$userInfo->getPassword()} <br>
-                {$error}
-                {$success}
+                <div class="profile-content">
+                    {$updateForm}
+                </div>
             </div>
         </div>
     </section>
@@ -42,11 +43,19 @@ if (empty($_SESSION['myuser']))
     die();
 }
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? "") === "delete") {
+    jsonDeleteUser($_SESSION['myuser']);
+    session_destroy();
+    header("Location: login.php");
+    die();
+}
+
 //Build up our Dynamic Content Items.
 $tpagetitle = "Profile Page";
 $tpagelead  = "";
 $tpagecontent = createPage();
 $tpagefooter = "";
+
 
 {
     //----BUILD OUR HTML PAGE----------------------------
@@ -59,6 +68,7 @@ $tpagefooter = "";
     if(!empty($tpagefooter))
         $tpage->setDynamic3($tpagefooter);
     //Return the Dynamic Page to the user.    
+    $tpage->addScriptFile("updateUserInfo.js");
     $tpage->renderPage();
     }
 ?>

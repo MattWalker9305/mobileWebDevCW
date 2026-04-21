@@ -4,7 +4,6 @@
         "email": "matthewwalker194@gmail.com",
         "fname": "Matthew",
         "lname": "Walker",
-        "username": "matthewwalker194@gmail.com",
         "password": "1qaz2WSX",
         "defaultCurrency": "GBP"
     },
@@ -13,7 +12,6 @@
         "email": "bob@bob.com",
         "fname": "Bob",
         "lname": "Bob",
-        "username": "bobob",
         "password": "qwerty",
         "defaultCurrency": "GBP"
     },
@@ -22,7 +20,6 @@
         "email": "1@1.com",
         "fname": "1",
         "lname": "1",
-        "username": "1",
         "password": "1",
         "defaultCurrency": "GBP"
     },
@@ -31,7 +28,6 @@
         "email": "asdasd@mail.com",
         "fname": "a",
         "lname": "a",
-        "username": "asdasfasd",
         "password": "54NF#x!6~MTTuvu",
         "defaultCurrency": "GBP"
     },
@@ -40,25 +36,14 @@
         "email": "test1@mail.com",
         "fname": "1",
         "lname": "1",
-        "username": "1",
         "password": "1",
         "defaultCurrency": "EUR"
-    },
-    {
-        "id": 6,
-        "email": "test2@email.com",
-        "fname": "2",
-        "lname": "2",
-        "username": "2",
-        "password": "2",
-        "defaultCurrency": "USD"
     },
     {
         "id": 7,
         "email": "test3@email.com",
         "fname": "3",
         "lname": "3",
-        "username": "3",
         "password": "3",
         "defaultCurrency": "GBP"
     }

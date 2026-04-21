@@ -126,12 +126,6 @@ function renderRegisterForm()
                 </div>
             </div>
             <div class="form-group">
-                <label for="myname" class="col-sm-2 control-label">Username:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="myusername" name="myusername" placeholder="Enter your username" required>
-                </div>
-            </div>
-            <div class="form-group">
                 <label for="mycurrency" class="col-sm-2 control-label">Currency:</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="mycurrency" name="mycurrency" required>
@@ -159,6 +153,52 @@ function renderRegisterForm()
                     <button type="submit" class="btn btn-primary">Register</button>
                 </div>
             </div>
+        </form>
+    </div>
+FORM;
+    return $html;
+}
+
+function renderUpdateForm($userInfo)
+{
+    $defaultCurrency = $userInfo->getDefaultCurrency();
+    $usdSelected = ($defaultCurrency == 'USD' ? 'selected' : '');
+    $eurSelected = ($defaultCurrency == 'EUR' ? 'selected' : '');
+    $gbpSelected = ($defaultCurrency == 'GBP' ? 'selected' : '');
+    $html = <<<FORM
+    <div class="form-group">
+        <label>First Name: </label>
+            <span class="profile-display" id="display-fname">{$userInfo->getFname()}</span>
+            <input type="text" class="profile-input form-control" id="fname" value="{$userInfo->getFname()}" style="display:none;">
+        </div>
+        <div class="form-group">
+            <label>Last Name: </label>
+            <span class="profile-display" id="display-lname">{$userInfo->getLname()}</span>
+            <input type="text" class="profile-input form-control" id="lname" value="{$userInfo->getLname()}" style="display:none;">
+        </div>
+        <div class="form-group">
+            <label>Default Currency: </label>
+            <span class="profile-display" id="display-defaultCurrency">{$userInfo->getDefaultCurrency()}</span>
+            <select class="profile-input form-control" id="defaultCurrency" name="defaultCurrency" style="display:none;">
+                <option value="USD" {$usdSelected}>USD</option>
+                <option value="EUR" {$eurSelected}>EUR</option>
+                <option value="GBP" {$gbpSelected}>GBP</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Email: </label>
+            <span>{$userInfo->getEmail()}</span>
+        </div>
+
+        <button id="edit-profile" class="btn btn-secondary">Edit</button>
+        <button id="save-profile" class="btn btn-primary" style="display:none;">Save Changes</button>
+        <button id="cancel-edit" class="btn btn-default" style="display:none;">Cancel</button>
+        <div id="profile-message"></div>
+
+        <hr>
+        <form method="post" action="profile.php" onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.');">
+            <input type="hidden" name="action" value="delete">
+            <button type="submit" class="btn btn-danger">Delete Account</button>
         </form>
     </div>
 FORM;

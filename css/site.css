@@ -41,7 +41,8 @@ body {
 	max-width: 100%;
 }
 
-.category-content {
+.category-content,
+.profile-content {
 	padding: 20px;
 	border-radius: 8px;
 	max-width: 100%;

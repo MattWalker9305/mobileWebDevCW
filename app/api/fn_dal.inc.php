@@ -49,10 +49,8 @@ function jsonSaveUser($user)
         'email'    => $user->getEmail(),
         'fname'    => $user->getFname(),
         'lname'    => $user->getLname(),
-        'username' => $user->getUsername(),
         'password' => $user->getPassword(),
         'defaultCurrency' => $user->getDefaultCurrency()
-
     ];
 
     $users[] = $user_data;
@@ -84,7 +82,6 @@ function jsonLoadAllUsers()
         $user->setEmail($user_data['email']);
         $user->setFname($user_data['fname']);
         $user->setLname($user_data['lname']);
-        $user->setUsername($user_data['username']);
         $user->setPassword($user_data['password']);
         $user->setDefaultCurrency($user_data['defaultCurrency']);
         $users[] = $user;
@@ -115,7 +112,6 @@ function jsonUpdateUser($updatedUser)
                 'email'    => $updatedUser->getEmail(),
                 'fname'    => $updatedUser->getFname(),
                 'lname'    => $updatedUser->getLname(),
-                'username' => $updatedUser->getUsername(),
                 'password' => $updatedUser->getPassword(),
                 'defaultCurrency' => $updatedUser->getDefaultCurrency()
             ];
@@ -125,13 +121,32 @@ function jsonUpdateUser($updatedUser)
                 'email'    => $user->getEmail(),
                 'fname'    => $user->getFname(),
                 'lname'    => $user->getLname(),
-                'username' => $user->getUsername(),
                 'password' => $user->getPassword(),
                 'defaultCurrency' => $user->getDefaultCurrency()
             ];
         }
     }
     file_put_contents(BASE_PATH . "/data/json/users.json", json_encode($updated, JSON_PRETTY_PRINT));
+}
+
+function jsonDeleteUser($email)
+{
+    $users = jsonLoadAllUsers();
+    $remaining = [];
+
+    foreach ($users as $user) {
+        if ($user->getEmail() !== $email) {
+            $remaining[] = [
+                'id'       => $user->getId(),
+                'email'    => $user->getEmail(),
+                'fname'    => $user->getFname(),
+                'lname'    => $user->getLname(),
+                'password' => $user->getPassword(),
+                'defaultCurrency' => $user->getDefaultCurrency()
+            ];
+        }
+    }
+    file_put_contents(BASE_PATH . "/data/json/users.json", json_encode($remaining, JSON_PRETTY_PRINT));
 }
 
 //---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
@@ -247,6 +262,20 @@ function sortTransactionsByDate($transactions) {
     return $transactions;
 }
 
+function jsonDeleteTransaction($transactionId)
+{
+    $file_path = BASE_PATH . "/data/json/transactions.json";
+    $json_data = file_exists($file_path) ? file_get_contents($file_path) : '[]';
+    $transactions = json_decode($json_data, true);
+    if (!is_array($transactions)) $transactions = [];
+
+    $transactions = array_filter($transactions, function($t) use ($transactionId) {
+        return $t['id'] !== $transactionId;
+    });
+
+    file_put_contents($file_path, json_encode(array_values($transactions), JSON_PRETTY_PRINT));
+}
+
 function getNextCategoryId()
 {
     $categories = jsonLoadAllCategories();
@@ -310,6 +339,20 @@ function jsonSaveCategory($category)
     ];
 
     file_put_contents($file_path, json_encode($categories, JSON_PRETTY_PRINT));
+}
+
+function jsonDeleteCategory($categoryId)
+{
+    $file_path = BASE_PATH . "/data/json/categories.json";
+    $json_data = file_exists($file_path) ? file_get_contents($file_path) : '[]';
+    $categories = json_decode($json_data, true);
+    if (!is_array($categories)) $categories = [];
+
+    $categories = array_filter($categories, function($c) use ($categoryId) {
+        return $c['id'] !== $categoryId;
+    });
+
+    file_put_contents($file_path, json_encode(array_values($categories), JSON_PRETTY_PRINT));
 }
 
 //--------------MANY OBJECT IMPLEMENTATION--------------------------------------------------------

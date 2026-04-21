@@ -1,5 +1,4 @@
 <?php 
-    require_once("oo_dal.inc.php");     //Objects - Data Access Layer
     require_once("fn_bll.inc.php");     //Functions - Business Logic Layer
 	require_once("fn_pl.inc.php");      //Functions - Presentation Layer
 	require_once("oo_page.inc.php");    //Objects - Page System - HTML Base

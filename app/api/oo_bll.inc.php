@@ -125,7 +125,6 @@ class BLLUser implements jsonSerializable
     private $email;
     private $fname;
     private $lname;
-    private $username;
     private $password;
     private $defaultCurrency;
 
@@ -140,9 +139,6 @@ class BLLUser implements jsonSerializable
     }
     public function setLname($lname){
         $this->lname = $lname;
-    }
-    public function setUsername($username){
-        $this->username = $username;
     }
     public function setPassword($password){
         $this->password = $password;
@@ -163,9 +159,7 @@ class BLLUser implements jsonSerializable
     public function getLname(){
         return $this->lname;
     }
-    public function getUsername(){
-        return $this->username;
-    }
+
     public function getPassword(){
         return $this->password;
     }
@@ -179,7 +173,6 @@ class BLLUser implements jsonSerializable
             'email'    => $this->email,
             'fname'    => $this->fname,
             'lname'    => $this->lname,
-            'username' => $this->username,
             'password' => $this->password,
             'defaultCurrency' => $this->defaultCurrency
         ];
