@@ -1,7 +1,6 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 
 function createPage()
@@ -17,11 +16,11 @@ function createPage()
 
     $tcontent = <<<PAGE
     <section class="row details" id="Profile">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Profile</h3>
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Profile</h3>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <div class="profile-content">
                     {$updateForm}
                 </div>
@@ -68,10 +67,10 @@ $tpagefooter = "";
     $tpage = new MasterPage($tpagetitle);
     //Set the Three Dynamic Areas (1 and 3 have defaults)
     if(!empty($tpagelead))
-        $tpage->setDynamic1($tpagelead);
-    $tpage->setDynamic2($tpagecontent);
+        $tpage->setRegion('top', $tpagelead);
+    $tpage->setRegion('main', $tpagecontent);
     if(!empty($tpagefooter))
-        $tpage->setDynamic3($tpagefooter);
+        $tpage->setRegion('footer', $tpagefooter);
     //Return the Dynamic Page to the user.    
     $tpage->addScriptFile("updateUserInfo.js");
     $tpage->renderPage();

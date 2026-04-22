@@ -1,19 +1,18 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----BUSINESS LOGIC---------------------------------
 
 //Get Existing Session
 session_start();
 
 $taction = $_REQUEST["action"] ?? "";
-if($taction == "exit" && appSessionLoginExists())
+if($taction == "exit" && isLoggedIn())
 {
-    appSessionDestroy();
-    appGoToHome();
+    logout();
+    goHome();
 }
-else 
+else
 {
-    appGoToError();
+    goHome();
 }

@@ -1,7 +1,6 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 function createPage()
 {
@@ -11,16 +10,17 @@ function createPage()
     $tbox_info = jsonLoadAllBoxInfo(BASE_PATH . "/data/json/home_page.json");
     $tboxes = "";
     foreach ($tbox_info as $box) {
-        $tboxes .= renderBox($box['title'], $box['description']);
+        $tboxes .= '<div class="col-md-4 d-flex">' . renderBox($box['title'], $box['description']) . '</div>';
     }
 
 $tcontent = <<<PAGE
             <div class="hero-banner">
                 <h1>Track Your Finances</h1>
                 <p class="lead">Helping you make informed financial decisions</p>
-                <a class="btn btn-primary" href= "login.php">Get Started</a>
+                <a class="btn btn-primary" href= "login.php">Login</a>
+                <a class="btn btn-secondary" href="register.php">Register</a>
             </div>
-            <div class="homepage-content">
+            <div class="row g-3 mt-2">
                 {$tboxes}
             </div>
         
@@ -50,10 +50,10 @@ else
     $tpage = new MasterPage($tpagetitle);
     //Set the Three Dynamic Areas (1 and 3 have defaults)
     if(!empty($tpagelead))
-        $tpage->setDynamic1($tpagelead);
-    $tpage->setDynamic2($tpagecontent);
+        $tpage->setRegion('top', $tpagelead);
+    $tpage->setRegion('main', $tpagecontent);
     if(!empty($tpagefooter))
-        $tpage->setDynamic3($tpagefooter);
+        $tpage->setRegion('footer', $tpagefooter);
     //Return the Dynamic Page to the user.    
     $tpage->renderPage();
 }

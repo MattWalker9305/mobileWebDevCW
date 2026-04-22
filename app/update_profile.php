@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("api/api.inc.php");
+include("api/apiLinks.php");
 
 header("Content-Type: application/json");
 

@@ -1,7 +1,6 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 
 function createPage()
@@ -32,7 +31,7 @@ function createPage()
 
     $tboxes = "";
     foreach ($tbox_info as $box) {
-        $tboxes .= renderSummaryBox($box['title'], $box['description']);
+        $tboxes .= '<div class="col-md-4">' . renderSummaryBox($box['title'], $box['description']) . '</div>';
     }
 
     $userTransactions = sortTransactionsByDate($userTransactions);
@@ -46,14 +45,16 @@ function createPage()
     //Construct the Page
 $tcontent = <<<PAGE
 <section class = "row details">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Dashboard</h3>
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title mb-0">Dashboard</h3>
         </div>
-        <div class="dashboard-content">
-            {$tboxes}
+        <div class="card-body border-bottom">
+            <div class="row g-3">
+                {$tboxes}
+            </div>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <h3 class="panel-subtitle">Recent Transactions</h3>
             <div class="transaction-actions">
                 <a class="btn btn-primary" href= "new_transaction.php">+ New Transaction </a>
@@ -94,10 +95,10 @@ else{
     $tpage = new MasterPage($tpagetitle);
     //Set the Three Dynamic Areas (1 and 3 have defaults)
     if(!empty($tpagelead))
-        $tpage->setDynamic1($tpagelead);
-    $tpage->setDynamic2($tpagecontent);
+        $tpage->setRegion('top', $tpagelead);
+    $tpage->setRegion('main', $tpagecontent);
     if(!empty($tpagefooter))
-        $tpage->setDynamic3($tpagefooter);
+        $tpage->setRegion('footer', $tpagefooter);
     //Return the Dynamic Page to the user.    
     $tpage->renderPage();
     }

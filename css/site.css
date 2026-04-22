@@ -168,8 +168,11 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: 0.5s;
-    flex: 1 1 250px;
-    max-width: 100%;
+    width: 100%;
+}
+
+.d-flex > .box {
+    flex: 1;
 }
 
 .summary-box {

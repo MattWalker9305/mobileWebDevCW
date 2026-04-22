@@ -1,14 +1,18 @@
 <?php
-class HTMLPage
+class WebPage
 {
-    private $_dir_css   = "";
-    private $_dir_js    = "";
-    private $_dir_img   = "";
-    private $_dir_fonts = "";
-    private $_dir_data  = "";
+    private $_paths = [
+        "css" => "",
+        "js" => "",
+        "img" => "",
+        "fonts" => "",
+        "data" => ""
+    ];
 
-    private $_arr_js    = [];
-    private $_arr_css   = [];
+    private $_assets = [
+        "css" => [],
+        "js" => []
+    ];
 
     private $_head_title     = "";
     private $_head_otherhtml = "";
@@ -20,44 +24,17 @@ class HTMLPage
         $this->_head_title = $ptitle;
     }
 
-    public function addScriptFile($pscriptfile)
-    {
-        $this->_arr_js[] = $pscriptfile;
+    public function setPath($type, $path) {
+        $this->_paths[$type] = $path;
     }
 
-    public function addCSSFile($pcssfile)
-    {
-        $this->_arr_css[] = $pcssfile;
+    public function addAsset($type, $file) {
+        $this->_assets[$type][] = $file;
     }
 
     public function setCustomHead($pheadhtml)
     {
         $this->_head_otherhtml = $pheadhtml;
-    }
-
-    public function setDirCSS($pcsspath)
-    {
-        $this->_dir_css = $pcsspath;
-    }
-
-    public function setDirJS($pjspath)
-    {
-        $this->_dir_js = $pjspath;
-    }
-
-    public function setDirImages($pimgpath)
-    {
-        $this->_dir_img = $pimgpath;
-    }
-
-    public function setDirFonts($pfontpath)
-    {
-        $this->_dir_fonts = $pfontpath;
-    }
-
-    public function setDirData($pdatapath)
-    {
-        $this->_dir_data = $pdatapath;
     }
 
     public function setBodyContent($pbodycontent)
@@ -75,8 +52,8 @@ class HTMLPage
             $thtmlmarkup = <<<HTML
 <!DOCTYPE html>
 <html lang="en">
-{$this->createHTML_Head()}
-{$this->createHTML_Body()}
+{$this->buildHead()}
+{$this->buildBody()}
 </html>
 HTML;
         return $thtmlmarkup;
@@ -84,14 +61,24 @@ HTML;
 
     public function setMediaDirectory($pcss,$pjs,$pfonts,$pimg,$pdata)
     {
-        $this->setDirCSS($pcss);
-        $this->setDirJS($pjs);
-        $this->setDirFonts($pfonts);
-        $this->setDirImages($pimg);
-        $this->setDirData($pdata);
+        $this->setPath('css', $pcss);
+        $this->setPath('js', $pjs);
+        $this->setPath('fonts', $pfonts);
+        $this->setPath('img', $pimg);
+        $this->setPath('data', $pdata);
     }
 
-    private function createHTML_Head()
+    public function addCSSFile($pcssfile)
+    {
+        $this->addAsset('css', $pcssfile);
+    }
+
+    public function addScriptFile($pjsfile)
+    {
+        $this->addAsset('js', $pjsfile);
+    }
+
+    private function buildHead()
 {
     $thead = <<<HEAD
 <head>
@@ -101,16 +88,16 @@ HTML;
     <title>{$this->_head_title}</title>
     {$this->_head_otherhtml}
     <!-- Include External CSS -->
-    {$this->createHTML_CSS()}
+    {$this->renderStyles()}
 </head>
 HEAD;
     return $thead;
 }
 
-    private function createHTML_CSS()
+    private function renderStyles()
     {
         $thtml = "";
-        $tpathcss = $this->toURLs($this->_arr_css,$this->_dir_css);
+        $tpathcss = $this->buildPaths($this->_assets['css'], $this->_paths['css']);
         foreach($tpathcss as $tcssfile)
         {
             $tcssmarkup = <<<SCRIPT
@@ -122,25 +109,24 @@ SCRIPT;
         return $thtml;
     }
 
-    private function createHTML_Body()
+    private function buildBody()
     {
-        $this->createHTML_JS();
         $thtml = <<<BODY
 <body>
     <!--PHP GENERATED PAGE CONTENT -->
     {$this->_body_content}
 
     <!-- EXTERNAL SCRIPTS -->
-    {$this->createHTML_JS()}
+    {$this->renderScripts()}
 </body>
 BODY;
         return $thtml;
     }
 
-    private function createHTML_JS()
+    private function renderScripts()
     {
         $thtml = "";
-        $tpathjs = $this->toURLs($this->_arr_js,$this->_dir_js);
+        $tpathjs = $this->buildPaths($this->_assets['js'], $this->_paths['js']);
         foreach($tpathjs as $tjsfile)
         {
         $tjsmarkup = <<<SCRIPT
@@ -152,14 +138,9 @@ SCRIPT;
         return $thtml;
     }
 
-    function toURLs(array &$parray,$ppath)
+    private function buildPaths($files, $basePath)
     {
-        $tpatharray = [];
-        foreach($parray as $tfile)
-        {
-            $tpatharray[] = "{$ppath}/{$tfile}";
-        }
-        return $tpatharray;
+    return array_map(fn($f) => "{$basePath}/{$f}", $files);
     }
 }
 ?>

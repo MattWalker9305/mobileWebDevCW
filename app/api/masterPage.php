@@ -1,29 +1,33 @@
 <?php
 
-require_once("oo_page.inc.php");
+require_once("pageObject.php");
+define('BASE_PATH', dirname(__DIR__, 2));
 
 class MasterPage
 {
 
     private $_htmlpage;     
-    private $_dynamic_1;    
-    private $_dynamic_2;    
-    private $_dynamic_3;    
+    
+    private $_regions = [];
+
+    public function setRegion($name, $content)
+    {
+        $this->_regions[$name] = $content;
+    }
+
+    public function getRegion($name)
+    {
+        return $this->_regions[$name] ?? "";
+    }  
 
     function __construct($ptitle)
     {
-        $this->_htmlpage = new HTMLPage($ptitle);
+        $this->_htmlpage = new WebPage($ptitle);
         $this->setPageDefaults();
         $this->setDynamicDefaults();
     }
     
-    public function getDynamic1() { return $this->_dynamic_1; }
-    public function getDynamic2() { return $this->_dynamic_2; } 
-    public function getDynamic3() { return $this->_dynamic_3; }
-    public function setDynamic1($phtml) { $this->_dynamic_1 = $phtml; }
-    public function setDynamic2($phtml) { $this->_dynamic_2 = $phtml; } 
-    public function setDynamic3($phtml) { $this->_dynamic_3 = $phtml; }
-    public function getPage(): HTMLPage { return $this->_htmlpage; } 
+    public function getPage(): WebPage { return $this->_htmlpage; }
                    
     public function createPage()
     {
@@ -57,7 +61,7 @@ class MasterPage
         $this->_htmlpage->setCustomHead('
             <link href="/mobileWebDevCW/css/bootstrap.css" rel="stylesheet">
             <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/mobileWebDevCW/js/bootstrap.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
         ');
         $this->addCSSFile("site.css");       
@@ -66,21 +70,18 @@ class MasterPage
     private function setDynamicDefaults()
     {
         $tcurryear = date("Y");
-        
-        $tuser = isset($_SESSION["myname"]) ? $_SESSION["myname"] : null;
 
-            $this->_dynamic_1 = "";
-            $this->_dynamic_2 = "";
-            $this->_dynamic_3 = <<<FOOTER
+        $this->setRegion('top', "");
+        $this->setRegion('main', "");
+        $this->setRegion('footer', <<<FOOTER
     <div class="fl-footer-terms">
-        <span>&copy; {$tcurryear} Matthew Walker &mdash; LJMU</span>
+        <span>&copy; {$tcurryear} Matthew Walker - LJMU</span>
         <ul>
             <li><a href="privacy.php">Privacy Policy</a></li>
             <li><a href="terms.php">Terms of Service</a></li>
         </ul>
     </div>
-    FOOTER;
-        
+    FOOTER);
     }
     
     private function setMasterContent()
@@ -104,7 +105,7 @@ class MasterPage
                     <li class="nav-item"><a class="nav-link{$active_categories}" href="categories.php">Categories</a></li>
                     <li class="nav-item"><a class="nav-link{$active_reports}" href="reports.php">Reports</a></li>
                     <li class="nav-item"><a class="nav-link{$active_profile}" href="profile.php">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="app_exit.php?action=exit">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.php?action=exit">Logout</a></li>
                 </ul>
                 <span class="navbar-text ms-3">Signed in as <strong>{$tuser}</strong></span>
 
@@ -141,13 +142,13 @@ class MasterPage
 
     <div class="container">
         <div class="py-4">
-            {$this->_dynamic_1}
+            {$this->getRegion('top')}
         </div>
         <div class="row">
-            {$this->_dynamic_2}
+            {$this->getRegion('main')}
         </div>
         <footer class="border-top mt-4 py-3 text-muted">
-            {$this->_dynamic_3}
+            {$this->getRegion('footer')}
         </footer>
     </div>
     MASTER;

@@ -1,7 +1,6 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 
 function createPage()
@@ -26,7 +25,7 @@ function createPage()
         } else {
             if (empty($error)) {
                 // Create new transaction
-                $new_transaction = new BLLTransaction();
+                $new_transaction = new Transaction();
                 $new_transaction->setId(getNextTransactionId());
                 $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
                 $new_transaction->setUserId($loggedInUser->getId());
@@ -49,11 +48,11 @@ function createPage()
     //Construct the Page
 $tcontent = <<<PAGE
 <section class = "row details" id = "club-quote">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">New Transaction</h3>
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h3 class="card-title mb-0">New Transaction</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             {$transactionForm}
         </div>
     </div>
@@ -88,10 +87,10 @@ else{
     $tpage = new MasterPage($tpagetitle);
     //Set the Three Dynamic Areas (1 and 3 have defaults)
     if(!empty($tpagelead))
-        $tpage->setDynamic1($tpagelead);
-    $tpage->setDynamic2($tpagecontent);
+        $tpage->setRegion('top', $tpagelead);
+    $tpage->setRegion('main', $tpagecontent);
     if(!empty($tpagefooter))
-        $tpage->setDynamic3($tpagefooter);
+        $tpage->setRegion('footer', $tpagefooter);
     //Return the Dynamic Page to the user.    
     $tpage->renderPage();
     }

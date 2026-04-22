@@ -1,6 +1,5 @@
 <?php
-
-class BLLCategory{
+class Category{
     private $id;
     private $userId;
     private $name;
@@ -26,7 +25,7 @@ class BLLCategory{
     }
 }
 
-class BLLTransaction{
+class Transaction{
     private $id;
     private $userId;
     private $name;
@@ -94,7 +93,7 @@ class BLLTransaction{
     }
 }
 
-class BLLUser implements jsonSerializable
+class User implements jsonSerializable
 {
     private $id;
     private $email;

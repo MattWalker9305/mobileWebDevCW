@@ -1,38 +1,35 @@
 <?php
 
-require_once("oo_bll.inc.php");
+require_once("classes.php");
 
-function appFormProcessData($pdata)
+function sanitise($input)
+{
+    return htmlspecialchars(trim($input ?? ""), ENT_QUOTES, 'UTF-8');
+}
+
+function sanitiseInput($pdata)
 {
     $tclean = $pdata ?? "";
     if (! empty($tclean))
     {
         $tclean = trim($tclean);
-        $tclean = stripslashes($tclean);
-        $tclean = htmlspecialchars($tclean);
+        $tclean = sanitise($tclean);
     }
     return $tclean;
 }
 
-function appGoToHome()
+function goHome()
 {
     header("Location: index.php");
 }
 
-function appGoToError()
-{
-    header("Location: app_error.php");
-}
-
-function appSessionLoginExists()
+function isLoggedIn()
 {
     $tuser = $_SESSION["myuser"] ?? "";
-    if(!empty($tuser))
-        return true;
-        return false;
+    return !empty($_SESSION["myuser"]);
 }
 
-function appSessionDestroy()
+function logout()
 {
     session_unset();
     session_destroy();
@@ -50,4 +47,9 @@ function getNextUserId($users) {
     return $maxId + 1;
 }
 
+function jsonLoadAllBoxInfo($location) : array
+{
+    $tjson = file_get_contents($location);
+    return json_decode($tjson, true);
+}
 ?>

@@ -1,7 +1,6 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 
 function createPage()
@@ -34,7 +33,7 @@ function createPage()
 
             if (empty($error)) {
                 // Create new user
-                $new_user = new BLLUser();
+                $new_user = new User();
                 $new_user->setId(getNextUserId($users));
                 $new_user->setEmail($email);
                 $new_user->setFname($fname);
@@ -54,11 +53,11 @@ function createPage()
 
     $tcontent = <<<PAGE
     <section class="row details" id="register-form">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Register</h3>
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Register</h3>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 {$error}
                 {$success}
                 {$formhtml}
@@ -92,10 +91,10 @@ else
     $tpage = new MasterPage($tpagetitle);
     //Set the Three Dynamic Areas (1 and 3 have defaults)
     if(!empty($tpagelead))
-        $tpage->setDynamic1($tpagelead);
-    $tpage->setDynamic2($tpagecontent);
+        $tpage->setRegion('top', $tpagelead);
+    $tpage->setRegion('main', $tpagecontent);
     if(!empty($tpagefooter))
-        $tpage->setDynamic3($tpagefooter);
+        $tpage->setRegion('footer', $tpagefooter);
     //Return the Dynamic Page to the user.    
     $tpage->renderPage();   
 }

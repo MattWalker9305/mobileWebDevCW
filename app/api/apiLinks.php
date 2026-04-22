@@ -1,0 +1,11 @@
+<?php 
+    require_once("basicFunctions.php");   
+	require_once("createBox.php");
+	require_once("userFunctions.php");
+	require_once("transactionFunctions.php");
+	require_once("categoryFunctions.php");
+	require_once("forms.php");
+	require_once("pageObject.php");    
+	require_once("masterPage.php");  
+	require_once("classes.php");     
+?>

@@ -1,7 +1,6 @@
 <?php 
 //----INCLUDE APIS------------------------------------
-include("api/api.inc.php");
-
+include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 function createPage()
 {
@@ -33,10 +32,10 @@ $tpagefooter = "";
 $tpage = new MasterPage($tpagetitle);
 //Set the Three Dynamic Areas (1 and 3 have defaults)
 if(!empty($tpagelead))
-    $tpage->setDynamic1($tpagelead);
-$tpage->setDynamic2($tpagecontent);
+    $tpage->setRegion('top', $tpagelead);
+$tpage->setRegion('main', $tpagecontent);
 if(!empty($tpagefooter))
-    $tpage->setDynamic3($tpagefooter);
+    $tpage->setRegion('footer', $tpagefooter);
 //Return the Dynamic Page to the user.    
 $tpage->renderPage();
 ?>
