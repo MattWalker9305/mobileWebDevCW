@@ -11,24 +11,29 @@ function createPage()
     $userID = $loggedInUser->getId();
 
     //Get the Data we need for this page
-    // $spendingOverview = jsonLoadSpendingOverview($_SESSION["myuser"] ?? "");
-    // $spendingOverviewHtml = renderSpendingOverview($spendingOverview);
-    $totalIncome = 500;//getTotalIncome($_SESSION["myuser"] ?? "");
-    $totalExpenses = 200;//getTotalExpenses($_SESSION["myuser"] ?? "");
+    $userTransactions = jsonLoadAllTransactionsForUser($userID ?? "");
+
+    $totalIncome   = 0;
+    $totalExpenses = 0;
+    foreach ($userTransactions as $t) {
+        if ($t->getType() === "income") {
+            $totalIncome   += (float) $t->getAmount();
+        } else {
+            $totalExpenses += (float) $t->getAmount();
+        }
+    }
     $netProfit = $totalIncome - $totalExpenses;
 
     $tbox_info = [
         ["title" => "Total Income", "description" => $totalIncome],
         ["title" => "Total Expenses", "description" => $totalExpenses],
-        ["title" => "Net Profit", "description" => $netProfit]    
+        ["title" => "Net Profit", "description" => $netProfit]
     ];
 
     $tboxes = "";
     foreach ($tbox_info as $box) {
         $tboxes .= renderBox($box['title'], $box['description']);
     }
-
-    $userTransactions = jsonLoadAllTransactionsForUser($userID ?? "");
 
     $userTransactions = sortTransactionsByDate($userTransactions);
     $userTransactions = array_slice($userTransactions, 0, 5);

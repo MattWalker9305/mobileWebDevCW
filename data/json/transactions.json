@@ -75,5 +75,16 @@
         "categoryName": "Food",
         "currency": "GBP",
         "notes": ""
+    },
+    {
+        "id": 10,
+        "userId": 1,
+        "name": "New Record",
+        "date": "2026-04-22",
+        "amount": "66",
+        "type": "expense",
+        "categoryName": "Entertainment",
+        "currency": "GBP",
+        "notes": ""
     }
 ]
