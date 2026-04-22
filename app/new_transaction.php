@@ -37,8 +37,6 @@ function createPage()
                 $new_transaction->setCategoryName($categoryName);
                 $new_transaction->setCurrency($currency);
                 $new_transaction->setNotes($notes);
-                $transactions[] = $new_transaction;
-
                 jsonSaveTransaction($new_transaction);
 
                 $success = "<p class='text-success'>Transaction created successfully!</p>";

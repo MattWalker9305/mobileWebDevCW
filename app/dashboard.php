@@ -32,7 +32,7 @@ function createPage()
 
     $tboxes = "";
     foreach ($tbox_info as $box) {
-        $tboxes .= renderBox($box['title'], $box['description']);
+        $tboxes .= renderSummaryBox($box['title'], $box['description']);
     }
 
     $userTransactions = sortTransactionsByDate($userTransactions);
@@ -40,7 +40,7 @@ function createPage()
     
     $recentTransactionBoxes = "";
     foreach ($userTransactions as $box) {
-        $recentTransactionBoxes .= renderBox($box->getName(), $box->getDate(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes(),$box->getAmount());
+        $recentTransactionBoxes .= renderBox($box->getName(), $box->getDate(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), "",$box->getAmount());
     }
 
     //Construct the Page

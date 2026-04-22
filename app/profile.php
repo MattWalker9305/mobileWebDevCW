@@ -44,6 +44,11 @@ if (empty($_SESSION['myuser']))
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? "") === "delete") {
+    $userToDelete = jsonLoadOneUser($_SESSION['myuser']);
+    if ($userToDelete) {
+        jsonDeleteTransactionsByUserId($userToDelete->getId());
+        jsonDeleteCategoriesByUserId($userToDelete->getId());
+    }
     jsonDeleteUser($_SESSION['myuser']);
     session_destroy();
     header("Location: login.php");

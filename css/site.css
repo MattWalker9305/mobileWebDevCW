@@ -76,6 +76,9 @@ body {
 .transaction-content .box:hover {
 	transform: scale(1.02);
 }
+.transaction-content .box.clickable {
+	cursor: pointer;
+}
 
 .transaction-actions {
 	display: flex;
@@ -165,8 +168,19 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: 0.5s;
-    flex: 1 1 250px;   
+    flex: 1 1 250px;
     max-width: 100%;
+}
+
+.summary-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-value {
+    margin: 0;
+    text-align: right;
 }
 
 .box:hover {

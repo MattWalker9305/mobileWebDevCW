@@ -3,41 +3,6 @@
 require_once("oo_bll.inc.php");
 define('BASE_PATH', dirname(__DIR__, 2));
 
-//---------JSON HELPER FUNCTIONS-------------------------------------------------------
-
-function jsonOne($pfile,$pid)
-{
-    $tsplfile = new SplFileObject($pfile);
-    $tsplfile->seek($pid-1);
-    $tdata = json_decode($tsplfile->current());
-    return $tdata;
-}
-
-function jsonAll($pfile)
-{
-    $tentries = file($pfile);
-    $tarray = [];
-    foreach($tentries as $tentry)
-    {
-        $tarray[] = json_decode($tentry);
-    }
-    return $tarray;
-}
-
-function jsonNextID($pfile)
-{
-    $tsplfile = new SplFileObject($pfile);
-    $tsplfile->seek(PHP_INT_MAX);
-    return $tsplfile->key() + 1;
-}
-
-//---------ID GENERATION FUNCTIONS-------------------------------------------------------
-
-function jsonNextPlayerID()
-{
-    return jsonNextID("/mobileWebDevCW/data/json/players.json");
-}
-
 //---------USER FUNCTIONS-------------------------------------------------------
 
 function jsonSaveUser($user)
@@ -149,18 +114,31 @@ function jsonDeleteUser($email)
     file_put_contents(BASE_PATH . "/data/json/users.json", json_encode($remaining, JSON_PRETTY_PRINT));
 }
 
-//---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
-function jsonLoadOneSmartphone($pid) : BLLSmartphone
+function jsonDeleteTransactionsByUserId($userId)
 {
-    $smartphone = new BLLSmartphone();
-    $smartphone->fromArray(jsonOne("/mobileWebDevCW/data/json/smartphones.json",$pid));
-    if(!empty($smartphone->desc_href))
-    {
-        $smartphone->desc = file_get_contents("/mobileWebDevCW/data/html/smartphone/{$smartphone->desc_href}");
-    }
-    return $smartphone;
+    $file_path = BASE_PATH . "/data/json/transactions.json";
+    $json_data = file_exists($file_path) ? file_get_contents($file_path) : '[]';
+    $transactions = json_decode($json_data, true);
+    if (!is_array($transactions)) $transactions = [];
+
+    $transactions = array_filter($transactions, fn($t) => $t['userId'] !== $userId);
+
+    file_put_contents($file_path, json_encode(array_values($transactions), JSON_PRETTY_PRINT));
 }
 
+function jsonDeleteCategoriesByUserId($userId)
+{
+    $file_path = BASE_PATH . "/data/json/categories.json";
+    $json_data = file_exists($file_path) ? file_get_contents($file_path) : '[]';
+    $categories = json_decode($json_data, true);
+    if (!is_array($categories)) $categories = [];
+
+    $categories = array_filter($categories, fn($c) => $c['userId'] !== $userId);
+
+    file_put_contents($file_path, json_encode(array_values($categories), JSON_PRETTY_PRINT));
+}
+
+//---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
 function jsonLoadOneTransaction($pid) : BLLTransaction
 {
     $transaction = new BLLTransaction();
@@ -355,13 +333,6 @@ function jsonDeleteCategory($categoryId)
     file_put_contents($file_path, json_encode(array_values($categories), JSON_PRETTY_PRINT));
 }
 
-//--------------MANY OBJECT IMPLEMENTATION--------------------------------------------------------
-function jsonLoadAllSmartphone() : array
-{
-    $tarray = jsonAll("/mobileWebDevCW/data/json/smartphones.json");
-    return array_map(function($a){ $tc = new BLLSmartphone(); $tc->fromArray($a); return $tc; },$tarray);
-}
-
 // function jsonLoadAllTransactions() : array
 // {
 //     $tarray = jsonAll(BASE_PATH . "/data/json/transactions.json");
@@ -380,25 +351,6 @@ function jsonLoadAllBoxInfo($location) : array
 {
     $tjson = file_get_contents($location);
     return json_decode($tjson, true);
-}
-
-//---------XML HELPER FUNCTIONS--------------------------------------------------------
-
-function xmlLoadAll($pxmlfile,$pclassname,$parrayname)
-{
-    $txmldata = simplexml_load_file($pxmlfile,$pclassname);
-    $tarray = [];
-    foreach($txmldata->{$parrayname} as $telement)
-    {
-        $tarray[] = $telement;
-    }
-    return $tarray;
-}
-
-function xmlLoadOne($pxmlfile,$pclassname)
-{
-    $txmldata = simplexml_load_file($pxmlfile,$pclassname);
-    return $txmldata;
 }
 
 ?>

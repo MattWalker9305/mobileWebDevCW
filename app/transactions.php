@@ -14,8 +14,18 @@ function createPage()
 
     $tboxes = "";
     foreach ($userTransactions as $box) {
-        $tboxes .= renderBox($box->getName(), $box->getDate(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes(), $box->getAmount());
+        $tboxes .= renderBox($box->getName(), 
+                            $box->getDate(), 
+                            $box->getType(), 
+                            $box->getCategoryName(), 
+                            $box->getCurrency(), 
+                            $box->getNotes(), 
+                            $box->getAmount(), 
+                            TRUE, 
+                            $box->getId());
     }
+
+    // $transactionPopup = renderTransactionModal();
 
     //Construct the Page
 $tcontent = <<<PAGE

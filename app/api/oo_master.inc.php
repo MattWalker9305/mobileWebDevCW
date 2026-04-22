@@ -10,15 +10,12 @@ class MasterPage
     private $_dynamic_1;    //Field Representing our Dynamic Content #1
     private $_dynamic_2;    //Field Representing our Dynamic Content #2
     private $_dynamic_3;    //Field Representing our Dynamic Content #3
-    private $_player_ids;
-    
     //-------CONSTRUCTORS-----------------------------------------
     function __construct($ptitle)
     {
         $this->_htmlpage = new HTMLPage($ptitle);
         $this->setPageDefaults();
-        $this->setDynamicDefaults(); 
-        $this->_player_ids = [3,7,8,9,10,11,14];
+        $this->setDynamicDefaults();
     }
     
     //-------GETTER/SETTER FUNCTIONS------------------------------

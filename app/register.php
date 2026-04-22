@@ -14,12 +14,11 @@ function createPage()
         $fname = $_POST["myfname"] ?? "";
         $lname = $_POST["mylname"] ?? "";
         $currency = $_POST["mycurrency"] ?? "";
-        $username = $_POST["myusername"] ?? "";
         $password = $_POST["mypassword"] ?? "";
         $confirm_password = $_POST["confirm_password"] ?? "";
 
         // Basic validation
-        if (empty($email) || empty($fname) || empty($lname) || empty($username) || empty($currency) || empty($password) || empty($confirm_password)) {
+        if (empty($email) || empty($fname) || empty($lname) || empty($currency) || empty($password) || empty($confirm_password)) {
             $error = "<p class='text-danger'>All fields are required.</p>";
         } elseif ($password !== $confirm_password) {
             $error = "<p class='text-danger'>Passwords do not match.</p>";
@@ -40,7 +39,6 @@ function createPage()
                 $new_user->setEmail($email);
                 $new_user->setFname($fname);
                 $new_user->setLname($lname);
-                $new_user->setUsername($username);
                 $new_user->setDefaultCurrency($currency);
                 $new_user->setPassword($password); // In production, hash the password
                 $users[] = $new_user;

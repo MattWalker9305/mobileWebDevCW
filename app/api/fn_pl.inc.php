@@ -1,75 +1,5 @@
 <?php
 require_once ("oo_bll.inc.php");
-// ----------SPENDING OVERVIEW RENDERING----------------------------------------------
-
-function renderSpendingOverview(){
-    
-}
-
-// ----------SMARTPHONE RENDERING----------------------------------------------
-function renderSmartphoneTable(array $smartphonelist)
-{
-    usort($smartphonelist, function ($a, $b) {
-        return $b->score <=> $a->score;
-    });
-
-    $trowdata = "";
-    foreach ($smartphonelist as $tc) {
-        $tlink = "<a class=\"btn btn-info\" href=\"phones.php?type=smartphone&id={$tc->id}\">More...</a>";
-        $trowdata .= "<tr><td>{$tc->score}</td><td>{$tc->make} {$tc->model}</td><td>{$tc->price}</td><td>{$tc->release}</td><td>{$tc->screen_size}</td><td>{$tlink}</td></tr>";
-    }
-    $ttable = <<<TABLE
-<table class="table table-striped table-hover">
-	<thead>
-		<tr>
-            <th>Score</th>
-	       	<th>Make</th>
-			<th>Price</th>
-            <th>Release</th>
-            <th>Screen size</th>
-			<th> </th>
-		</tr>
-	</thead>
-	<tbody>
-	   {$trowdata}
-	</tbody>
-</table>
-TABLE;
-	   return $ttable;
-}
-
-function renderSmartphoneOverview(BLLSmartphone $pc)
-{
-    $tbio = !empty($pc->desc_href) ? file_get_contents("data/html/smartphone/{$pc->desc_href}") : "There are no details on this smartphone.";
-    $timgref = "img/smartphone/{$pc->model}.jpg";
-    $timg = $timgref;
-    $toverview = <<<OV
-    <article class="row marketing">
-        <h2>Smartphone Details</h2>
-        <div class="media-left">
-            <img src="$timg" width="256" />
-        </div>
-        <div class="media-body">
-            <div class="well">
-                <div class="media-right" style="float: right">
-                    <h1><strong>Score {$pc->score}</strong></h1>
-                </div>
-                <h1>{$pc->make} {$pc->model}</h1>
-                <h3>Price: <strong>{$pc->price}</strong></h3>
-                <h4>Screen Size: {$pc->screen_size} 
-                <br>Dimensions: {$pc->dimensions}
-                <br>Weight: {$pc->weight}
-                <br>Release: {$pc->release}
-                <br>OS: {$pc->os}</h4>
-                <d  iv class="col">
-                    {$tbio}
-                </div>
-            </div>
-        </div>
-    </article>
-OV;
-    return $toverview;
-}
 
 // ----------LOGIN RENDERING----------------------------------------------
 function renderLoginForm()
@@ -293,6 +223,12 @@ FORM;
     return $html;
 }
 
+function rendereTransactionUpdateForm($transaction, $defaultCurrency, $userId)
+{
+    // Similar to renderTransactionForm but pre-fills values and has a hidden input for transaction ID
+    // Implementation would go here
+}
+
 function renderAddCategoryForm()
 {
     $html = <<<FORM
@@ -313,13 +249,44 @@ FORM;
     return $html;
 }
 
+
+
 // ----------BOX RENDERING----------------------------------------------
-function renderBox($title, $content = "", $date = "", $amount = "", $type = "", $categoryName = "", $currency = "", $notes = "")
+function renderBox($title, 
+                    $content = "",
+                    $date = "", 
+                    $type = "", 
+                    $categoryName = "", 
+                    $currency = "",
+                    $amount = "",  
+                    $notes = "", 
+                    $clickable = FALSE, 
+                    $id = null)
+{
+    if ($clickable) {
+        $tbox = <<<BOX
+        <div class="box clickable" >
+            <h2>{$title}</h2>
+            <p>{$content} {$date} {$type} {$categoryName} {$currency} {$amount}</p>
+        </div>
+BOX;
+    } else {
+        $tbox = <<<BOX
+        <div class="box">
+            <h2>{$title}</h2>
+            <p>{$content} {$date} {$type} {$categoryName} {$currency} {$amount}</p>
+        </div> 
+BOX;
+    }
+    return $tbox;
+}
+
+function renderSummaryBox($title, $value)
 {
     $tbox = <<<BOX
-    <div class="box">
+    <div class="box summary-box">
         <h2>{$title}</h2>
-        <p>{$content} {$date} {$amount} {$type} {$categoryName} {$currency} {$notes}</p>
+        <h3 class="summary-value">{$value}</h3>
     </div>
 BOX;
     return $tbox;

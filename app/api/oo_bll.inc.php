@@ -1,30 +1,5 @@
 <?php
 
-class BLLSmartphone 
-{
-    //-------CLASS FIELDS------------------
-    public $id = null;
-    public $make;
-    public $model;
-    public $screen_size;
-    public $dimensions;
-    public $weight;
-    public $release;
-    public $os;
-    public $price;
-    public $score;
-    public $desc;
-    public $desc_href;
-    
-    public function fromArray(stdClass $passoc)
-    {
-        foreach($passoc as $tkey => $tvalue)
-        {
-            $this->{$tkey} = $tvalue;
-        }
-    }
-}
-
 class BLLCategory{
     private $id;
     private $userId;
