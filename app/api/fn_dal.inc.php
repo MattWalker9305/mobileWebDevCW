@@ -1,9 +1,6 @@
 <?php
-//Include the Other Layers Class Definitions
 require_once("oo_bll.inc.php");
 define('BASE_PATH', dirname(__DIR__, 2));
-
-//---------USER FUNCTIONS-------------------------------------------------------
 
 function jsonSaveUser($user)
 {
@@ -138,7 +135,6 @@ function jsonDeleteCategoriesByUserId($userId)
     file_put_contents($file_path, json_encode(array_values($categories), JSON_PRETTY_PRINT));
 }
 
-//---------JSON-DRIVEN OBJECT CREATION FUNCTIONS-----------------------------------------
 function jsonLoadOneTransaction($pid) : BLLTransaction
 {
     $transaction = new BLLTransaction();
@@ -169,7 +165,7 @@ function jsonLoadAllTransactions()
     if ($json_data === false) {
         return [];
     }
-    $transactions_data = json_decode($json_data, true); // true = associative arrays
+    $transactions_data = json_decode($json_data, true); 
     if (json_last_error() !== JSON_ERROR_NONE || !is_array($transactions_data)) {
         return [];
     }
@@ -235,7 +231,7 @@ function sortTransactionsByDate($transactions) {
     usort($transactions, function($a, $b) {
         $dateA = strtotime($a->getDate());
         $dateB = strtotime($b->getDate());
-        return $dateB <=> $dateA; // Sort in descending order
+        return $dateB <=> $dateA; 
     });
     return $transactions;
 }
@@ -332,20 +328,6 @@ function jsonDeleteCategory($categoryId)
 
     file_put_contents($file_path, json_encode(array_values($categories), JSON_PRETTY_PRINT));
 }
-
-// function jsonLoadAllTransactions() : array
-// {
-//     $tarray = jsonAll(BASE_PATH . "/data/json/transactions.json");
-//     return array_map(function($a){ $tc = new BLLTransaction(); $tc->fromArray($a); return $tc; },$tarray);
-// }
-
-// function jsonLoadAllTransactionsForUser($puser) : array
-// {
-//     $transactions = jsonLoadAllTransactions();
-//     return array_filter($transactions, function($t) use ($puser) {
-//         return $t->user === $puser;
-//     });
-// }
 
 function jsonLoadAllBoxInfo($location) : array
 {

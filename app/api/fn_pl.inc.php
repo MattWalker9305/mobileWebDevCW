@@ -1,7 +1,6 @@
 <?php
 require_once ("oo_bll.inc.php");
 
-// ----------LOGIN RENDERING----------------------------------------------
 function renderLoginForm()
 {
     $html = <<<FORM
@@ -30,8 +29,6 @@ FORM;
     return $html;
 }
 
-
-// ----------REGISTER RENDERING----------------------------------------------
 function renderRegisterForm()
 {
     $html = <<<FORM
@@ -134,8 +131,6 @@ function renderUpdateForm($userInfo)
 FORM;
     return $html;
 }
-
-// ----------TRANSACTION RENDERING----------------------------------------------
 
 function renderTransactionForm($defaultCurrency, $userId)
 {
@@ -249,9 +244,6 @@ FORM;
     return $html;
 }
 
-
-
-// ----------BOX RENDERING----------------------------------------------
 function renderBox($title, 
                     $content = "",
                     $date = "", 
