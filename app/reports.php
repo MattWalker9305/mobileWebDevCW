@@ -6,16 +6,7 @@ include("api/api.inc.php");
 
 function createPage()
 {
-    $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
-    $userID = $loggedInUser->getId();
-
-    $userTransactions = jsonLoadAllTransactionsForUser($userID ?? "");
-
-    $tboxes = "";
-    foreach ($userTransactions as $box) {
-        $tboxes .= renderBox($box->getName(), $box->getDate(), $box->getAmount(), $box->getType(), $box->getCategoryName(), $box->getCurrency(), $box->getNotes());
-    }
-
+    
     //Construct the Page
 $tcontent = <<<PAGE
 <section class = "row details">
@@ -23,8 +14,13 @@ $tcontent = <<<PAGE
         <div class="panel-heading">
             <h3 class="panel-title">Reports</h3>
         </div>
-    </div>    
+        <div class="panel-body">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
 </section>
+
+<script src="/mobileWebDevCW/js/reportsChart.js"></script>
 
 PAGE;
 
