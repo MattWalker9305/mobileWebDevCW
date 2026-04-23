@@ -4,9 +4,6 @@ include("api/apiLinks.php");
 //----PAGE GENERATION LOGIC---------------------------
 function createPage()
 {
-    //Page-Specific Static Content
-    $twelcome = file_get_contents(BASE_PATH . "/data/static/index_welcome.part.html");
-
     $tbox_info = jsonLoadAllBoxInfo(BASE_PATH . "/data/json/home_page.json");
     $tboxes = "";
     foreach ($tbox_info as $box) {

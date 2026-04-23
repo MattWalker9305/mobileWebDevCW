@@ -74,7 +74,7 @@ function jsonDeleteCategory($categoryId)
     if (!is_array($categories)) $categories = [];
 
     $categories = array_filter($categories, function($c) use ($categoryId) {
-        return $c['id'] !== $categoryId;
+        return $c['id'] != $categoryId;
     });
 
     file_put_contents($file_path, json_encode(array_values($categories), JSON_PRETTY_PRINT));

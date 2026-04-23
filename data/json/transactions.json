@@ -53,5 +53,16 @@
         "categoryName": "Other",
         "currency": "GBP",
         "notes": ""
+    },
+    {
+        "id": 9,
+        "userId": 1,
+        "name": "train",
+        "date": "2026-03-18",
+        "amount": "20",
+        "type": "expense",
+        "categoryName": "Transport",
+        "currency": "GBP",
+        "notes": ""
     }
 ]

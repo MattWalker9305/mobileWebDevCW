@@ -226,3 +226,10 @@ body {
 		margin-bottom: 30px;
 	}
 }
+
+.chart-doughnut-wrap {
+    max-height: 400px;
+    display: flex;
+    justify-content: center;
+}
+

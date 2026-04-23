@@ -8,13 +8,21 @@ function createPage()
     
     //Construct the Page
 $tcontent = <<<PAGE
-<section class = "row details">
+<section class="row details">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h3 class="card-title mb-0">Spending by Category</h3>
+        </div>
+        <div class="card-body chart-doughnut-wrap">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
     <div class="card shadow-sm">
         <div class="card-header">
-            <h3 class="card-title mb-0">Reports</h3>
+            <h3 class="card-title mb-0">Monthly Income vs Expenses</h3>
         </div>
         <div class="card-body">
-            <canvas id="myChart"></canvas>
+            <canvas id="monthlyChart"></canvas>
         </div>
     </div>
 </section>

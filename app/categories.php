@@ -10,14 +10,14 @@ function createPage()
 
     $userCategories = jsonLoadAllCategoriesForUser($userID ?? "");
 
-    $categorieBoxes = "";
-    foreach ($userCategories as $box) {
-        $categorieBoxes .= '<div class="col-12 col-md-6 col-lg-4">';
-        $categorieBoxes .= renderBox($box->getName());
-        $categorieBoxes .= '</div>';
-    }
-
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $action = $_POST["action"] ?? "add";
+        if ($action === "delete") {
+            $categoryId = ($_POST["category_id"] ?? 0);
+            if ($categoryId) jsonDeleteCategory($categoryId);
+            header("Location: categories.php");
+            exit();
+        }
         $category = $_POST["mycategory"] ?? "";
         if (!empty($category)) {
             $new_category = new Category();
@@ -28,6 +28,13 @@ function createPage()
             header("Location: categories.php");
             exit();
         }
+    }
+
+    $categorieBoxes = "";
+    foreach ($userCategories as $box) {
+        $categorieBoxes .= '<div class="col-12 col-md-6 col-lg-4">';
+        $categorieBoxes .= renderBox($box->getName(), '', '', '', '', '', '', '', FALSE, $box->getId(), TRUE, 'categories.php');
+        $categorieBoxes .= '</div>';
     }
 
     $addCategoryForm = renderAddCategoryForm();
