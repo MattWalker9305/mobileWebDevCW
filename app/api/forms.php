@@ -218,10 +218,61 @@ FORM;
     return $html;
 }
 
-function rendereTransactionUpdateForm($transaction, $defaultCurrency, $userId)
+function renderTransactionEditForm($userId)
 {
-    // Similar to renderTransactionForm but pre-fills values and has a hidden input for transaction ID
-    // Implementation would go here
+    $categoryOptions = "";
+    $categories = jsonLoadAllCategoriesForUser($userId);
+
+    foreach ($categories as $category) {
+        $categoryName = $category->getName();
+        $categoryOptions .= "<option value='{$categoryName}'>{$categoryName}</option>";
+    }
+
+    $html = <<<FORM
+    <div class="modal-body">
+        <input type="hidden" id="modal-id">
+        <div class="row g-3">
+            <div class="col-12">
+                <label for="modal-name" class="form-label">Name</label>
+                <input type="text" id="modal-name" class="form-control">
+            </div>
+            <div class="col-sm-6">
+                <label for="modal-date" class="form-label">Date</label>
+                <input type="date" id="modal-date" class="form-control">
+            </div>
+            <div class="col-sm-6">
+                <label for="modal-type" class="form-label">Type</label>
+                <select id="modal-type" class="form-select">
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <label for="modal-amount" class="form-label">Amount</label>
+                <input type="number" id="modal-amount" class="form-control" step="0.01" min="0">
+            </div>
+            <div class="col-sm-6">
+                <label for="modal-currency" class="form-label">Currency</label>
+                <select class="form-select" id="modal-currency">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="modal-category" class="form-label">Category</label>
+                <select id="modal-category" class="form-select">
+                    $categoryOptions
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="modal-notes" class="form-label">Notes</label>
+                <textarea id="modal-notes" class="form-control" rows="2"></textarea>
+            </div>
+        </div>
+    </div>
+FORM;
+    return $html;
 }
 
 function renderAddCategoryForm()

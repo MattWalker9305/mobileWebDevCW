@@ -124,4 +124,51 @@ function jsonDeleteTransaction($transactionId)
 
     file_put_contents($file_path, json_encode(array_values($transactions), JSON_PRETTY_PRINT));
 }
+
+function jsonUpdateTransaction($id, $name, $date, $amount, $type, $categoryName, $notes, $currency)
+{
+    $file_path = BASE_PATH . "/data/json/transactions.json";
+    $transactions = json_decode(file_get_contents($file_path), true);
+    foreach ($transactions as &$t) {
+        if ($t['id'] == $id) {
+            $t['name']         = $name;
+            $t['date']         = $date;
+            $t['amount']       = $amount;
+            $t['type']         = $type;
+            $t['categoryName'] = $categoryName;
+            $t['notes']        = $notes;
+            $t['currency']     = $currency;
+            break;
+        }
+    }
+    file_put_contents($file_path, json_encode($transactions, JSON_PRETTY_PRINT));
+}
+
+function renderTransactionModal()
+{
+    $loggedInUser = jsonLoadOneUser($_SESSION['myuser']);
+    $userID = $loggedInUser->getId();
+
+    $form = renderTransactionEditForm($userID);
+
+    $html = <<<MODAL
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Edit Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {$form}
+                <div class="modal-footer">
+                    <button type="button" onclick="saveTransaction()" class="btn btn-primary">Save Changes</button>
+                    <button type="button" onclick="deleteTransaction()" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+MODAL;
+    return $html;
+}
 ?>

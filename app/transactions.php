@@ -13,18 +13,19 @@ function createPage()
 
     $tboxes = "";
     foreach ($userTransactions as $box) {
-        $tboxes .= renderBox($box->getName(), 
-                            $box->getDate(), 
-                            $box->getType(), 
-                            $box->getCategoryName(), 
-                            $box->getCurrency(), 
-                            $box->getNotes(), 
-                            $box->getAmount(), 
-                            TRUE, 
+        $tboxes .= renderBox($box->getName(),
+                            '',
+                            $box->getDate(),
+                            $box->getType(),
+                            $box->getCategoryName(),
+                            $box->getCurrency(),
+                            $box->getAmount(),
+                            $box->getNotes(),
+                            TRUE,
                             $box->getId());
     }
 
-    // $transactionPopup = renderTransactionModal();
+    $transactionPopup = renderTransactionModal();
 
     //Construct the Page
 $tcontent = <<<PAGE
@@ -41,7 +42,7 @@ $tcontent = <<<PAGE
         </div>
     </div>
 </section>
-
+{$transactionPopup}
 PAGE;
 
 return $tcontent;
@@ -75,7 +76,8 @@ else{
     $tpage->setRegion('main', $tpagecontent);
     if(!empty($tpagefooter))
         $tpage->setRegion('footer', $tpagefooter);
-    //Return the Dynamic Page to the user.    
+    $tpage->addScriptFile("editTransactions.js");
+    //Return the Dynamic Page to the user.
     $tpage->renderPage();
     }
 ?>

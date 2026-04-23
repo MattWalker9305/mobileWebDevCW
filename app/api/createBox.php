@@ -14,9 +14,17 @@ function renderBox($title,
 {
     if ($clickable) {
         $tbox = <<<BOX
-        <div class="box clickable" >
+        <div class="box transaction-box clickable"
+             data-id="{$id}"
+             data-name="{$title}"
+             data-date="{$date}"
+             data-type="{$type}"
+             data-category="{$categoryName}"
+             data-currency="{$currency}"
+             data-amount="{$amount}"
+             data-notes="{$notes}">
             <h2>{$title}</h2>
-            <p>{$content} {$date} {$type} {$categoryName} {$currency} {$amount}</p>
+            <p>{$date} {$type} {$categoryName} {$currency} {$amount}</p>
         </div>
 BOX;
     } else {

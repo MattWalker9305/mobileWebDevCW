@@ -6,7 +6,7 @@
         "date": "2026-04-15",
         "amount": "70",
         "type": "expense",
-        "categoryName": "Friends",
+        "categoryName": "Other",
         "currency": "GBP",
         "notes": "Money for the concert"
     },
@@ -39,7 +39,7 @@
         "date": "2026-04-17",
         "amount": "20",
         "type": "expense",
-        "categoryName": "Other",
+        "categoryName": "Family",
         "currency": "GBP",
         "notes": ""
     },
@@ -51,28 +51,6 @@
         "amount": "50",
         "type": "income",
         "categoryName": "Other",
-        "currency": "GBP",
-        "notes": ""
-    },
-    {
-        "id": 9,
-        "userId": 1,
-        "name": "pizza",
-        "date": "2026-04-19",
-        "amount": "10",
-        "type": "expense",
-        "categoryName": "Food",
-        "currency": "GBP",
-        "notes": ""
-    },
-    {
-        "id": 10,
-        "userId": 1,
-        "name": "New Record",
-        "date": "2026-04-22",
-        "amount": "66",
-        "type": "expense",
-        "categoryName": "Entertainment",
         "currency": "GBP",
         "notes": ""
     }
